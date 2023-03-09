@@ -9,11 +9,10 @@ class HomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      elevation: 0,
-      backgroundColor: fromHexColor(Constants.COLOR_APPBAR),
-      centerTitle: true,
-      title: Text(title),
-      iconTheme: const IconThemeData(color: Colors.white),
-    );
+        elevation: 0,
+        backgroundColor: fromHexColor(Constants.COLOR_APPBAR),
+        centerTitle: true,
+        title: Text(title),
+        iconTheme: const IconThemeData(color: Colors.white));
   }
 }

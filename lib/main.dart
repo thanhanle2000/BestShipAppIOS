@@ -19,9 +19,7 @@ Future<void> main() async {
 
   final UserRepository userRepository = UserRepository();
 
-  runApp(
-    BlocProvider(
-        create: (context) => AuthenticationBloc(userRepository: userRepository),
-        child: Apps(userRepository: userRepository)),
-  );
+  runApp(BlocProvider(
+      create: (context) => AuthenticationBloc(userRepository: userRepository),
+      child: Apps(userRepository: userRepository)));
 }

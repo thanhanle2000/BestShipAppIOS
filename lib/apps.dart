@@ -26,6 +26,7 @@ class AppsState extends State<Apps> {
 
     // Kiểm tra lại trạng thái đăng nhập
     _authenticationBloc = context.read<AuthenticationBloc>();
+
     // AuthenticationBloc(userRepository: widget.userRepository);
 
     // Vào màn hình chờ khoảng 3s
@@ -36,13 +37,10 @@ class AppsState extends State<Apps> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<ConectBloc>(create: (context) => ConectBloc()),
-        BlocProvider<ThemeBloc>(create: (context) => ThemeBloc())
-      ],
-      child: _buildWithTheme(context),
-    );
+    return MultiBlocProvider(providers: [
+      BlocProvider<ConectBloc>(create: (context) => ConectBloc()),
+      BlocProvider<ThemeBloc>(create: (context) => ThemeBloc())
+    ], child: _buildWithTheme(context));
   }
 
   Widget _buildWithTheme(BuildContext context) {

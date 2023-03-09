@@ -37,7 +37,7 @@ class _OrderProcessFilterState extends State<OrderProcessFilter> {
   @override
   void initState() {
     super.initState();
-    getListShop(' ');
+    getListShop('');
   }
 
   getDate(String date) {
@@ -78,7 +78,7 @@ class _OrderProcessFilterState extends State<OrderProcessFilter> {
         OrderProcessFilterChange(
           title: IsNullOrEmpty(titleShop) ? 'Shop' : titleShop,
           onTap: () async {
-            await Future.delayed(const Duration(milliseconds: 700), () async {
+            await Future.delayed(const Duration(milliseconds: 500), () async {
               await showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
@@ -94,7 +94,7 @@ class _OrderProcessFilterState extends State<OrderProcessFilter> {
                             iconfx: Icons.clear,
                             onpress: () async {
                               _shopController.clear();
-                              await getListShop(' ');
+                              await getListShop('');
                             },
                             title: 'Nhập vào Shop cần tìm',
                             icon: Icons.search_rounded,

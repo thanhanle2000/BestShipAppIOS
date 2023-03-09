@@ -69,142 +69,134 @@ class _OrderScanState extends State<OrderScan> {
   Widget build(BuildContext context) {
     final username = AuthenticationViewModel.fromJson(jsonDecode(name!));
     return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: Colors.grey[200],
-        // ignore: prefer_const_constructors
-        appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(45.0),
-            child: const CustomAppbar(title: 'Quét đơn hàng')),
-        // ignore: prefer_const_constructors
-        drawer: NavDrawer('/'),
-        body: BlocListener<OrderScanBloc, OrderScanState>(
-          listener: (context, state) {},
-          child: BlocBuilder<OrderScanBloc, OrderScanState>(
-              builder: (context, state) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Scanfield(
-                      title: 'Nhập và quét bằng máy Barcode',
-                      icon: Icons.settings_remote_outlined,
-                      controller: _barcodeController,
-                      onpress: () {
-                        _barcodeController.clear();
-                      },
-                      iconfx: Icons.clear,
-                      onFocus: () => FocusScope.of(context).requestFocus(),
-                      onSubmit: (value) async {
-                        //truyền value vào api
-                        var check = checkShopUserName(
-                            ShopId,
-                            username.userType == 4
-                                ? username.userName!
-                                : userName);
-                        if (check.toString() == "OK") {
-                          if (!IsNullOrEmpty(value)) {
-                            await getOrderScanTextFieldEvent(value);
-                          }
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Scaffold(
+            resizeToAvoidBottomInset: true,
+            backgroundColor: Colors.grey[200],
+            // ignore: prefer_const_constructors
+            appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(45.0),
+                child: const CustomAppbar(title: 'Quét đơn hàng')),
+            // ignore: prefer_const_constructors
+            drawer: NavDrawer('/'),
+            body: BlocListener<OrderScanBloc, OrderScanState>(
+                listener: (context, state) {},
+                child: BlocBuilder<OrderScanBloc, OrderScanState>(
+                    builder: (context, state) {
+                  return SingleChildScrollView(
+                      child: Column(children: [
+                    Scanfield(
+                        title: 'Nhập và quét bằng máy Barcode',
+                        icon: Icons.settings_remote_outlined,
+                        controller: _barcodeController,
+                        onpress: () {
                           _barcodeController.clear();
-                        } else {
-                          ScaffoldMessenger.of(context)
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(
-                              snackBar_message(check.toString(), "warning"),
-                            );
-                        }
-                      }),
-                  // hiển thị số liệu của các trạng thái quét hàng (chờ lấy hàng,quét mã,còn lại, tổng tiền)
-                  // ignore: prefer_const_constructors
-                  OrderScanToday(
-                      date: dateNow,
-                      dataTotalScan: state.dataTotalScan,
+                        },
+                        iconfx: Icons.clear,
+                        onFocus: () => FocusScope.of(context).requestFocus(),
+                        onSubmit: (value) async {
+                          //truyền value vào api
+                          var check = checkShopUserName(
+                              ShopId,
+                              username.userType == 4
+                                  ? username.userName!
+                                  : userName);
+                          if (check.toString() == "OK") {
+                            if (!IsNullOrEmpty(value)) {
+                              await getOrderScanTextFieldEvent(value);
+                            }
+                            _barcodeController.clear();
+                          } else {
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(
+                                snackBar_message(check.toString(), "warning"),
+                              );
+                          }
+                        }),
+                    // hiển thị số liệu của các trạng thái quét hàng (chờ lấy hàng,quét mã,còn lại, tổng tiền)
+                    // ignore: prefer_const_constructors
+                    OrderScanToday(
+                        date: dateNow,
+                        dataTotalScan: state.dataTotalScan,
+                        orderScanBloc: _oderScanBloc,
+                        shopId: ShopId),
+                    // chọn các thao tác thay đổi của bộ lọc (ngày,list : shop, user)
+                    // ignore: prefer_const_constructors
+                    OrderScanTextField(
                       orderScanBloc: _oderScanBloc,
-                      shopId: ShopId),
-                  // chọn các thao tác thay đổi của bộ lọc (ngày,list : shop, user)
-                  // ignore: prefer_const_constructors
-                  OrderScanTextField(
-                    orderScanBloc: _oderScanBloc,
-                    dataListShop: state.dataListShop,
-                    dataUser: state.dataUser,
-                    shopId: getShopId,
-                    date: getDate,
-                    user: getUser,
-                  ),
-                  const SizedBox(height: 5),
-                  //scan bằng cam điện thoại
-                  OrderListButtonConfirmFilter(
-                      color: fromHexColor(Constants.COLOR_BUTTON),
-                      hw: 5,
-                      title: 'Quét bằng Camera',
-                      onpress: () async {
-                        var check = checkShopUserName(
-                            ShopId,
-                            username.userType == 4
-                                ? username.userName!
-                                : userName);
-                        if (check.toString() == "OK") {
-                          scanQROpen();
-                        } else {
-                          ScaffoldMessenger.of(context)
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(
-                              snackBar_message(check.toString(), "warning"),
-                            );
-                        }
-                      }),
-                  const SizedBox(height: 5),
-                  OrderListButtonConfirmFilter(
-                      color: fromHexColor(Constants.COLOR_BUTTON),
-                      hw: 5,
-                      title: 'Quét QR liên tục',
-                      onpress: () async {
-                        var check = checkShopUserName(
-                            ShopId,
-                            username.userType == 4
-                                ? username.userName!
-                                : userName);
-                        if (check.toString() == "OK") {
-                          scanContinuousDataEvent("QR");
-                        } else {
-                          ScaffoldMessenger.of(context)
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(
-                              snackBar_message(check.toString(), "warning"),
-                            );
-                        }
-                      }),
-                  const SizedBox(height: 5),
-                  OrderListButtonConfirmFilter(
-                      color: fromHexColor(Constants.COLOR_BUTTON),
-                      hw: 5,
-                      title: 'Quét Barcode liên tục',
-                      onpress: () async {
-                        var check = checkShopUserName(
-                            ShopId,
-                            username.userType == 4
-                                ? username.userName!
-                                : userName);
-                        if (check.toString() == "OK") {
-                          scanContinuousDataEvent("Barcode");
-                        } else {
-                          ScaffoldMessenger.of(context)
-                            ..hideCurrentSnackBar()
-                            ..showSnackBar(
-                              snackBar_message(check.toString(), "warning"),
-                            );
-                        }
-                      })
-                ],
-              ),
-            );
-          }),
-        ),
-      ),
-    );
+                      dataListShop: state.dataListShop,
+                      dataUser: state.dataUser,
+                      shopId: getShopId,
+                      date: getDate,
+                      user: getUser,
+                    ),
+                    const SizedBox(height: 5),
+                    //scan bằng cam điện thoại
+                    OrderListButtonConfirmFilter(
+                        color: fromHexColor(Constants.COLOR_BUTTON),
+                        hw: 5,
+                        title: 'Quét bằng Camera',
+                        onpress: () async {
+                          var check = checkShopUserName(
+                              ShopId,
+                              username.userType == 4
+                                  ? username.userName!
+                                  : userName);
+                          if (check.toString() == "OK") {
+                            scanQROpen();
+                          } else {
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(snackBar_message(
+                                  check.toString(), "warning"));
+                          }
+                        }),
+                    const SizedBox(height: 5),
+                    OrderListButtonConfirmFilter(
+                        color: fromHexColor(Constants.COLOR_BUTTON),
+                        hw: 5,
+                        title: 'Quét QR liên tục',
+                        onpress: () async {
+                          var check = checkShopUserName(
+                              ShopId,
+                              username.userType == 4
+                                  ? username.userName!
+                                  : userName);
+                          if (check.toString() == "OK") {
+                            scanContinuousDataEvent("QR");
+                          } else {
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(snackBar_message(
+                                  check.toString(), "warning"));
+                          }
+                        }),
+                    const SizedBox(height: 5),
+                    OrderListButtonConfirmFilter(
+                        color: fromHexColor(Constants.COLOR_BUTTON),
+                        hw: 5,
+                        title: 'Quét Barcode liên tục',
+                        onpress: () async {
+                          var check = checkShopUserName(
+                              ShopId,
+                              username.userType == 4
+                                  ? username.userName!
+                                  : userName);
+                          if (check.toString() == "OK") {
+                            scanContinuousDataEvent("Barcode");
+                          } else {
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(
+                                snackBar_message(check.toString(), "warning"),
+                              );
+                          }
+                        })
+                  ]));
+                }))));
   }
 
   // Hàm xử lí order scan qua textfield

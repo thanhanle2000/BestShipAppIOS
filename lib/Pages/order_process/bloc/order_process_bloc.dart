@@ -83,6 +83,7 @@ class OrderProcessBloc extends Bloc<OrderProcessEvent, OrderProcessState> {
         if (event is OrderProcessStartedEvent) {
           try {
             if (state.status != OrderProcessStatus.initial) {}
+            orderListShop = await _orderRespository.getDataListShop('');
           } catch (_) {
             emit(state.copyWith(status: OrderProcessStatus.failure));
           }

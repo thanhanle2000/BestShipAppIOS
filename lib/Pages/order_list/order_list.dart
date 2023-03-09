@@ -46,13 +46,12 @@ class _OrderListState extends State<OrderList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.grey[300],
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(45.0),
-          child: CustomAppbar(title: widget.title)),
-      body: buildList(),
-    );
+        resizeToAvoidBottomInset: true,
+        backgroundColor: Colors.grey[300],
+        appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(45.0),
+            child: CustomAppbar(title: widget.title)),
+        body: buildList());
   }
 
   Widget buildList() {
@@ -76,9 +75,7 @@ class _OrderListState extends State<OrderList> {
           backgroundColor: Colors.white,
           onRefresh: () async => context.read<OrderListBloc>().loadPosts(),
           child: Column(children: [
-            OrderScanFailTotal(
-              total: total,
-            ),
+            OrderScanFailTotal(total: total),
             Expanded(
                 child: ListView.builder(
                     controller: scrollController,
@@ -86,9 +83,7 @@ class _OrderListState extends State<OrderList> {
                       if (index < dataJson.length) {
                         // ignore: curly_braces_in_flow_control_structures
                         return OrderShareItem(
-                          data: dataJson[index],
-                          isActiveStatus: false,
-                        );
+                            data: dataJson[index], isActiveStatus: false);
                       } else {
                         Timer(const Duration(milliseconds: 10), () {
                           scrollController.jumpTo(

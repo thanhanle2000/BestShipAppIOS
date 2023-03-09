@@ -24,38 +24,38 @@ class OrderItemPaymentState extends State<OrderItemPayment> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      const SizedBox(height: 5),
+      const SizedBox(height: 3),
       Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Icon(Icons.view_day,
-            color: fromHexColor(Constants.COLOR_BUTTON), size: 15),
+            color: fromHexColor(Constants.COLOR_BUTTON), size: 14),
         const SizedBox(width: 5),
         Expanded(
             child: Wrap(children: [
           Text(widget.data.shopOrderProduct!,
               style: const TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Colours.textDefault))
         ]))
       ]),
-      const SizedBox(height: 5),
+      const SizedBox(height: 3),
       (!IsNullOrEmpty(widget.data.shopNote!))
           ? Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Icon(Icons.comment,
-                  color: fromHexColor(Constants.COLOR_BUTTON), size: 15),
+                  color: fromHexColor(Constants.COLOR_BUTTON), size: 14),
               const SizedBox(width: 5),
               Expanded(
                   child: Wrap(children: [
                 Text(widget.data.shopNote!,
                     style: const TextStyle(
                         color: Colours.textDefault,
-                        fontSize: 15,
+                        fontSize: 14,
                         fontStyle: FontStyle.italic,
                         decoration: TextDecoration.underline))
               ]))
             ])
           : const SizedBox(),
-      const SizedBox(height: 5),
+      const SizedBox(height: 3),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Row(children: [
           !IsNullOrEmpty(widget.data.shopPhone!)
@@ -67,7 +67,7 @@ class OrderItemPaymentState extends State<OrderItemPayment> {
                   child: Text(widget.data.shopPhone!,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                          fontSize: 14,
                           color: fromHexColor(Constants.COLOR_APPBAR))))
               : const SizedBox(),
           const SizedBox(width: 5),
@@ -83,15 +83,15 @@ class OrderItemPaymentState extends State<OrderItemPayment> {
                             "success"),
                       );
                   },
-                  child: const Icon(Icons.content_copy_outlined, size: 15))
+                  child: const Icon(Icons.content_copy_outlined, size: 14))
               : const SizedBox()
         ]),
         Text(widget.data.shopName!,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 15,
+                fontSize: 14,
                 color: fromHexColor(Constants.COLOR_APPBAR)))
-      ]),
+      ])
     ]);
   }
 }

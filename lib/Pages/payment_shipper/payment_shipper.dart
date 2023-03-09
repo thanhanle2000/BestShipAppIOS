@@ -49,7 +49,7 @@ class _PaymentShipperState extends State<PaymentShipper> {
                 });
           }
           // tắt loading
-          if (state.success) {
+          else {
             Navigator.of(context).pop();
           }
           // khi không có dữ liệu sẽ trả về message fail

@@ -101,41 +101,44 @@ class OrderModels {
   dynamic lng;
   dynamic lat;
   String? formatted_address;
-  OrderModels({
-    this.baseStatus,
-    this.orderStatus,
-    this.id,
-    this.orderDate,
-    this.orderCode,
-    this.orderStatusNote,
-    this.orderStatusCount,
-    this.customerName,
-    this.customerPhone,
-    this.customerAddress,
-    this.districtId,
-    this.wardId,
-    this.districtname,
-    this.wardname,
-    this.shopOrderProduct,
-    this.shopNote,
-    this.shopOrderCode,
-    this.codPrice,
-    this.shipPrice,
-    this.totalPrice,
-    this.pickuper,
-    this.shipper,
-    this.telesale,
-    this.shopId,
-    this.shopName,
-    this.shopPhone,
-    this.cancelId,
-    this.action_count,
-    this.isCanceled,
-    this.ordersStatusHistory,
-    this.lng,
-    this.lat,
-    this.formatted_address,
-  });
+  String? rowCreatedTime;
+  String? rowLastUpdatedTime;
+  OrderModels(
+      {this.baseStatus,
+      this.orderStatus,
+      this.id,
+      this.orderDate,
+      this.orderCode,
+      this.orderStatusNote,
+      this.orderStatusCount,
+      this.customerName,
+      this.customerPhone,
+      this.customerAddress,
+      this.districtId,
+      this.wardId,
+      this.districtname,
+      this.wardname,
+      this.shopOrderProduct,
+      this.shopNote,
+      this.shopOrderCode,
+      this.codPrice,
+      this.shipPrice,
+      this.totalPrice,
+      this.pickuper,
+      this.shipper,
+      this.telesale,
+      this.shopId,
+      this.shopName,
+      this.shopPhone,
+      this.cancelId,
+      this.action_count,
+      this.isCanceled,
+      this.ordersStatusHistory,
+      this.lng,
+      this.lat,
+      this.formatted_address,
+      this.rowCreatedTime,
+      this.rowLastUpdatedTime});
 
   OrderModels.fromJson(Map<String, dynamic> json) {
     baseStatus = json['baseStatus'] != null
@@ -178,6 +181,8 @@ class OrderModels {
     lng = json['lng'];
     lat = json['lat'];
     formatted_address = json['formatted_address'];
+    rowCreatedTime = json['rowCreatedTime'];
+    rowLastUpdatedTime = json['rowLastUpdatedTime'];
   }
 
   Map<String, dynamic> toJson() {
@@ -212,6 +217,8 @@ class OrderModels {
     data['shopPhone'] = this.shopPhone;
     data['cancelId'] = this.cancelId;
     data['action_count'] = this.action_count;
+    data['rowCreatedTime'] = this.rowCreatedTime;
+    data['rowLastUpdatedTime'] = this.rowLastUpdatedTime;
     return data;
   }
 
@@ -249,42 +256,45 @@ class OrderModels {
     double? lng,
     double? lat,
     String? formatted_address,
+    String? rowCreatedTime,
+    String? rowLastUpdatedTime,
   }) {
     return OrderModels(
-      baseStatus: baseStatus,
-      orderStatus: orderStatus,
-      id: id,
-      orderDate: orderDate,
-      orderCode: orderCode,
-      orderStatusNote: orderStatusNote,
-      orderStatusCount: orderStatusCount,
-      customerName: customerName,
-      customerPhone: customerPhone,
-      customerAddress: customerAddress,
-      districtId: districtId,
-      wardId: wardId,
-      districtname: districtname,
-      wardname: wardname,
-      shopOrderProduct: shopOrderProduct,
-      shopNote: shopNote,
-      shopOrderCode: shopOrderCode,
-      codPrice: codPrice,
-      shipPrice: shipPrice,
-      totalPrice: totalPrice,
-      pickuper: pickuper,
-      shipper: shipper,
-      telesale: telesale,
-      shopId: shopId,
-      shopName: shopName,
-      shopPhone: shopPhone,
-      cancelId: cancelId,
-      action_count: action_count,
-      isCanceled: isCanceled,
-      ordersStatusHistory: ordersStatusHistory,
-      lat: lat,
-      lng: lng,
-      formatted_address: formatted_address,
-    );
+        baseStatus: baseStatus,
+        orderStatus: orderStatus,
+        id: id,
+        orderDate: orderDate,
+        orderCode: orderCode,
+        orderStatusNote: orderStatusNote,
+        orderStatusCount: orderStatusCount,
+        customerName: customerName,
+        customerPhone: customerPhone,
+        customerAddress: customerAddress,
+        districtId: districtId,
+        wardId: wardId,
+        districtname: districtname,
+        wardname: wardname,
+        shopOrderProduct: shopOrderProduct,
+        shopNote: shopNote,
+        shopOrderCode: shopOrderCode,
+        codPrice: codPrice,
+        shipPrice: shipPrice,
+        totalPrice: totalPrice,
+        pickuper: pickuper,
+        shipper: shipper,
+        telesale: telesale,
+        shopId: shopId,
+        shopName: shopName,
+        shopPhone: shopPhone,
+        cancelId: cancelId,
+        action_count: action_count,
+        isCanceled: isCanceled,
+        ordersStatusHistory: ordersStatusHistory,
+        lat: lat,
+        lng: lng,
+        formatted_address: formatted_address,
+        rowCreatedTime: rowCreatedTime,
+        rowLastUpdatedTime: rowLastUpdatedTime);
   }
 }
 

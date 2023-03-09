@@ -17,15 +17,14 @@ class HttpRequestServices {
 
   // ignore: non_constant_identifier_names
   Future<http.Response> HttpRequestPost(String url, String parameter) async {
-    final orderListResponse = await httpClient.post(
-      Uri.parse('$baseUrl/api/$url'),
-      headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
-        HttpHeaders.acceptHeader: 'application/json',
-        HttpHeaders.authorizationHeader: "Bearer $token"
-      },
-      body: parameter,
-    );
+    final orderListResponse =
+        await httpClient.post(Uri.parse('$baseUrl/api/$url'),
+            headers: {
+              HttpHeaders.contentTypeHeader: 'application/json',
+              HttpHeaders.acceptHeader: 'application/json',
+              HttpHeaders.authorizationHeader: "Bearer $token"
+            },
+            body: parameter);
     return orderListResponse;
   }
 

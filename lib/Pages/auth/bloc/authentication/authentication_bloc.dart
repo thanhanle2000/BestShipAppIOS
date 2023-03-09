@@ -10,8 +10,7 @@ class AuthenticationBloc
   final UserRepository _userRepository;
 
   AuthenticationBloc({required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
+      : _userRepository = userRepository,
         super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) async {
       if (event is AuthenticationStartedEvent) {

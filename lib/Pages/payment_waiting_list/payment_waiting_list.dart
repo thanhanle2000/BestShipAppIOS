@@ -46,8 +46,7 @@ class _PaymentWaitingListState extends State<PaymentWaitingList> {
                     child: CircularProgressIndicator(
                         color: fromHexColor(Constants.COLOR_BUTTON)));
               });
-        }
-        if (state.success) {
+        } else {
           Navigator.of(context).pop();
         }
         if (state.status == 'fail') {

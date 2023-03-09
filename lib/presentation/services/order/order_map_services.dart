@@ -19,17 +19,14 @@ class OrderMapServices {
       String? endDate,
       int? page}) async {
     var response = await httpRequest.HttpRequestPost(
-      'Orders/Read',
-      jsonEncode(
-        <String, dynamic>{
+        'Orders/Read',
+        jsonEncode(<String, dynamic>{
           'orderStatus': orderStatus,
           'startDate': startDate,
           'endDate': endDate,
           'page': page,
           'pageSize': Constants.PAGESIZE_Map,
-        },
-      ),
-    );
+        }));
 
     if (response.statusCode != 200) {
       // Lỗi
@@ -57,10 +54,7 @@ class OrderMapServices {
         "filterType": "order_scan_remain"
       },
     );
-    var response = await httpRequest.HttpRequestPost(
-      'Orders/Read',
-      param,
-    );
+    var response = await httpRequest.HttpRequestPost('Orders/Read', param);
     if (response.statusCode != 200) {
       // Lỗi
       throw Exception('Invalid Credentials');
@@ -81,25 +75,20 @@ class OrderMapServices {
       String? SortType,
       int? shopId,
       List<int>? orderStatus}) async {
-    var param = jsonEncode(
-      <String, dynamic>{
-        'page': page,
-        'startDate': startDate,
-        'endDate': endDate,
-        'customerPhone': customerPhone,
-        'customerName': customerName,
-        'orderCode': orderCode,
-        'shopOrderCode': shopOrderCode,
-        'SortType': SortType,
-        'shopId': shopId,
-        'orderStatus': orderStatus,
-        'pageSize': Constants.PAGESIZE,
-      },
-    );
-    var response = await httpRequest.HttpRequestPost(
-      'Orders/Read',
-      param,
-    );
+    var param = jsonEncode(<String, dynamic>{
+      'page': page,
+      'startDate': startDate,
+      'endDate': endDate,
+      'customerPhone': customerPhone,
+      'customerName': customerName,
+      'orderCode': orderCode,
+      'shopOrderCode': shopOrderCode,
+      'SortType': SortType,
+      'shopId': shopId,
+      'orderStatus': orderStatus,
+      'pageSize': Constants.PAGESIZE,
+    });
+    var response = await httpRequest.HttpRequestPost('Orders/Read', param);
     // print(param);
     if (response.statusCode != 200) {
       // Lỗi
@@ -114,11 +103,12 @@ class OrderMapServices {
   Future<StatusModels> getSuccessStatusChange(
       int? shopId, String? code, String? shipper) async {
     var response = await httpRequest.HttpRequestPost(
-      'Orders/Change_to_success_status',
-      jsonEncode(
-        <String, dynamic>{'shopId': shopId, 'code': code, 'shipper': shipper},
-      ),
-    );
+        'Orders/Change_to_success_status',
+        jsonEncode(<String, dynamic>{
+          'shopId': shopId,
+          'code': code,
+          'shipper': shipper
+        }));
     if (response.statusCode != 200) {
       // Lỗi
       throw Exception('Invalid Credentials');
@@ -131,17 +121,14 @@ class OrderMapServices {
   Future<StatusModels> getCancelStatusChange(int? shopId, String? code,
       String? shipper, int? CancelId, String? cancelReason) async {
     var response = await httpRequest.HttpRequestPost(
-      'Orders/Report_cancel',
-      jsonEncode(
-        <String, dynamic>{
+        'Orders/Report_cancel',
+        jsonEncode(<String, dynamic>{
           'shopId': shopId,
           'code': code,
           'shipper': shipper,
           'CancelId': CancelId,
           'cancelReason': cancelReason
-        },
-      ),
-    );
+        }));
     if (response.statusCode != 200) {
       // Lỗi
       throw Exception('Invalid Credentials');
@@ -160,9 +147,8 @@ class OrderMapServices {
       int? action_id,
       String? action_text) async {
     var response = await httpRequest.HttpRequestPost(
-      'Orders/Add_action',
-      jsonEncode(
-        <String, dynamic>{
+        'Orders/Add_action',
+        jsonEncode(<String, dynamic>{
           'shopId': shopId,
           'code': code,
           'action_item_id': action_item_id,
@@ -170,9 +156,7 @@ class OrderMapServices {
           'shipper': shipper,
           'action_id': action_id,
           'action_text': action_text
-        },
-      ),
-    );
+        }));
     if (response.statusCode != 200) {
       // Lỗi
       throw Exception('Invalid Credentials');

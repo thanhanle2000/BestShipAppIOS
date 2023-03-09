@@ -83,10 +83,7 @@ class _NavDrawerState extends State<NavDrawer> {
                                         style: TextStyle(fontSize: 18))
                                   ])
                             ])),
-                        const Divider(
-                          height: 0.25,
-                          color: Colors.black45,
-                        ),
+                        const Divider(height: 0.25, color: Colors.black45),
                         Container(
                           color: Theme.of(context).hintColor.withOpacity(.05),
                           child: ExpansionTile(

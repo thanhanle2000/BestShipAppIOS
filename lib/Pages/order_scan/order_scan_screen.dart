@@ -20,10 +20,10 @@ class OrderScanScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<OrderScanBloc>(
-      create: (context) => OrderScanBloc(
-          orderRespository: _orderRespository, userRepository: _userRepository),
-      // ignore: prefer_const_constructors
-      child: OrderScan(),
-    );
+        create: (context) => OrderScanBloc(
+            orderRespository: _orderRespository,
+            userRepository: _userRepository),
+        // ignore: prefer_const_constructors
+        child: OrderScan());
   }
 }

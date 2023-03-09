@@ -13,18 +13,13 @@ class PaymentServices {
   // Hàm lấy danh sách thanh toán cho shipper
   Future<PaymentShipperModels> getDataListPayment(
       String? startDate, String? endDate, int? page) async {
-    var param = jsonEncode(
-      <String, dynamic>{
-        'startDate': startDate,
-        'endDate': endDate,
-        'page': page,
-        'pageSize': Constants.PAGESIZE_Payment,
-      },
-    );
-    var response = await httpRequest.HttpRequestPost(
-      'PaymentShip/Read',
-      param,
-    );
+    var param = jsonEncode(<String, dynamic>{
+      'startDate': startDate,
+      'endDate': endDate,
+      'page': page,
+      'pageSize': Constants.PAGESIZE_Payment,
+    });
+    var response = await httpRequest.HttpRequestPost('PaymentShip/Read', param);
     if (response.statusCode != 200) {
       // Lỗi
       throw Exception('Invalid Credentials');
@@ -37,13 +32,11 @@ class PaymentServices {
   // Hàm lấythu nhập cho shipper
   Future<IncomeModels> getDataIncome(
       String? Shipper, String? startDate, String? endDate) async {
-    var param = jsonEncode(
-      <String, dynamic>{
-        'Shipper': Shipper,
-        'startDate': startDate,
-        'endDate': endDate,
-      },
-    );
+    var param = jsonEncode(<String, dynamic>{
+      'Shipper': Shipper,
+      'startDate': startDate,
+      'endDate': endDate,
+    });
     var response = await httpRequest.HttpRequestPost(
       'PaymentShip/PaymentShip_GetIncome',
       param,
@@ -85,9 +78,7 @@ class PaymentServices {
   // lấy danh sách chi tiết đợi thanh toán
   Future<PaymentShipperDetailModels> getDataPaymentWaitingList(
       String? shipper) async {
-    var param = jsonEncode(
-      <String, dynamic>{'shipper': shipper},
-    );
+    var param = jsonEncode(<String, dynamic>{'shipper': shipper});
     var response = await httpRequest.HttpRequestGet(
         'PaymentShip/PaymentShipList_GetWaitPayment?shipper=$shipper', param);
     if (response.statusCode != 200) {

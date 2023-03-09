@@ -45,8 +45,7 @@ class _PaymentShipperDetailsState extends State<PaymentShipperDetails> {
                       child: CircularProgressIndicator(
                           color: fromHexColor(Constants.COLOR_BUTTON)));
                 });
-          }
-          if (state.success) {
+          } else {
             Navigator.of(context).pop();
           }
           if (state.status == 'fail') {

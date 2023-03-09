@@ -37,6 +37,7 @@ class _OrderProcessState extends State<OrderProcess> {
     super.initState();
     orderBloc = context.read<OrderProcessBloc>();
     orderBloc.add(OrderProcessStartedEvent());
+    orderBloc.add(OrderProcessKeyEvent(key: ''));
     _scrollController.addListener(_onScroll);
   }
 
@@ -53,119 +54,108 @@ class _OrderProcessState extends State<OrderProcess> {
                 orderBloc: orderBloc,
                 blocContext: context)),
         body: BlocListener<OrderProcessBloc, OrderProcessState>(
-            listener: (context, state) {},
-            child: BlocBuilder<OrderProcessBloc, OrderProcessState>(
+            listener: (context, state) {
+          // Bật loading khi tải map
+          // ignore: unrelated_type_equality_checks
+          if (state.status == "OrderProcessStatus.success") {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                          color: fromHexColor(Constants.COLOR_BUTTON)));
+                });
+          }
+          // Tắt loading khi tải dữ liệu bản đồ thành công
+          else {
+            // Navigator.of(context).pop();
+          }
+        }, child: BlocBuilder<OrderProcessBloc, OrderProcessState>(
                 builder: (context, state) {
-              switch (state.status) {
-                case OrderProcessStatus.failure:
-                  return loadingIndicator();
-                case OrderProcessStatus.success:
-                  // ignore: unnecessary_null_comparison
-                  return state.lstData == null
-                      ? loadingIndicator()
-                      : Column(children: [
-                          username.userType == 4
-                              ? const SizedBox()
-                              : OrderProcessFilter(
-                                  number: state.number,
-                                  orderBloc: orderBloc,
-                                  dataListShop: state.dataListShop,
-                                  blocContext: context,
-                                  isCheck: state.isCheck),
-                          const SizedBox(height: 3),
-                          OrderProcessHeaderReport(
-                              total: state.data != null ? state.total : 0,
-                              totalOth:
-                                  state.data != null ? state.total_other : 0,
-                              totalPro: state.data != null
-                                  ? state.total_processing
-                                  : 0,
-                              totalSuc:
-                                  state.data != null ? state.total_succsess : 0,
-                              orderBloc: orderBloc,
-                              blocContext: context),
-                          Expanded(
-                              child: RefreshIndicator(
-                                  color: fromHexColor(Constants.COLOR_BUTTON),
-                                  backgroundColor: Colors.white,
-                                  onRefresh: () async {
-                                    await getStarted(context);
-                                    // ignore: use_build_context_synchronously
-                                    ScaffoldMessenger.of(context)
-                                      ..hideCurrentSnackBar()
-                                      ..showSnackBar(snackBar_message(
-                                          'Cập nhật dữ liệu thành công.',
-                                          "success"));
-                                  },
-                                  child: ListView.builder(
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      if (index >= state.lstData.length) {
-                                        return (state.total ==
-                                                state.lstData.length
-                                            ? endData()
-                                            : loadingIndicator());
-                                      } else {
-                                        return Slidable(
-                                            startActionPane: state
-                                                        .lstData[index]
-                                                        .baseStatus
-                                                        ?.status ==
-                                                    4
-                                                ? ActionPane(
-                                                    extentRatio: 0.31,
-                                                    motion:
-                                                        const ScrollMotion(),
-                                                    children: [
-                                                        OrderProcessSidableLeft(
-                                                            status: state
-                                                                .actionStatus!,
-                                                            data: state
-                                                                .lstData[index],
-                                                            orderBloc:
-                                                                orderBloc,
-                                                            blocContext:
-                                                                context)
-                                                      ])
-                                                : const ActionPane(
-                                                    motion: ScrollMotion(),
-                                                    children: []),
-                                            endActionPane: state.lstData[index]
-                                                        .baseStatus?.status ==
-                                                    4
-                                                ? ActionPane(
-                                                    extentRatio: 0.62,
-                                                    motion:
-                                                        const ScrollMotion(),
-                                                    children: [
-                                                        OrderProcessSidableRight(
-                                                            status: state
-                                                                .actionStatus!,
-                                                            data: state
-                                                                .lstData[index],
-                                                            orderBloc:
-                                                                orderBloc,
-                                                            blocContext:
-                                                                context)
-                                                      ])
-                                                : const ActionPane(
-                                                    motion: ScrollMotion(),
-                                                    children: []),
-                                            child: OrderShareItem(
-                                                data: state.lstData[index],
-                                                isActiveStatus: false));
-                                      }
-                                    },
-                                    itemCount: state.hasReachedMax
-                                        ? state.lstData.length
-                                        : state.lstData.length + 1,
-                                    controller: _scrollController,
-                                  )))
-                        ]);
-                case OrderProcessStatus.initial:
-                  return loadingIndicator();
-              }
-            })));
+          // ignore: unnecessary_null_comparison
+          return state.lstData == null
+              ? loadingIndicator()
+              : Column(children: [
+                  username.userType == 4
+                      ? const SizedBox()
+                      : OrderProcessFilter(
+                          number: state.number,
+                          orderBloc: orderBloc,
+                          dataListShop: state.dataListShop,
+                          blocContext: context,
+                          isCheck: state.isCheck),
+                  const SizedBox(height: 3),
+                  OrderProcessHeaderReport(
+                      total: state.data != null ? state.total : 0,
+                      totalOth: state.data != null ? state.total_other : 0,
+                      totalPro: state.data != null ? state.total_processing : 0,
+                      totalSuc: state.data != null ? state.total_succsess : 0,
+                      orderBloc: orderBloc,
+                      blocContext: context),
+                  Expanded(
+                      child: RefreshIndicator(
+                          color: fromHexColor(Constants.COLOR_BUTTON),
+                          backgroundColor: Colors.white,
+                          onRefresh: () async {
+                            await getStarted(context);
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(snackBar_message(
+                                  'Cập nhật dữ liệu thành công.', "success"));
+                          },
+                          child: ListView.builder(
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index >= state.lstData.length) {
+                                return (state.total == state.lstData.length
+                                    ? endData()
+                                    : loadingIndicator());
+                              } else {
+                                return Slidable(
+                                    startActionPane: state.lstData[index]
+                                                .baseStatus?.status ==
+                                            4
+                                        ? ActionPane(
+                                            extentRatio: 0.31,
+                                            motion: const ScrollMotion(),
+                                            children: [
+                                                OrderProcessSidableLeft(
+                                                    status: state.actionStatus!,
+                                                    data: state.lstData[index],
+                                                    orderBloc: orderBloc,
+                                                    blocContext: context)
+                                              ])
+                                        : const ActionPane(
+                                            motion: ScrollMotion(),
+                                            children: []),
+                                    endActionPane: state.lstData[index]
+                                                .baseStatus?.status ==
+                                            4
+                                        ? ActionPane(
+                                            extentRatio: 0.62,
+                                            motion: const ScrollMotion(),
+                                            children: [
+                                                OrderProcessSidableRight(
+                                                    status: state.actionStatus!,
+                                                    data: state.lstData[index],
+                                                    orderBloc: orderBloc,
+                                                    blocContext: context)
+                                              ])
+                                        : const ActionPane(
+                                            motion: ScrollMotion(),
+                                            children: []),
+                                    child: OrderShareItem(
+                                        data: state.lstData[index],
+                                        isActiveStatus: false));
+                              }
+                            },
+                            itemCount: state.hasReachedMax
+                                ? state.lstData.length
+                                : state.lstData.length + 1,
+                            controller: _scrollController,
+                          )))
+                ]);
+        })));
   }
 
   // reload lại trang

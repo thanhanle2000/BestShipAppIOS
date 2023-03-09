@@ -16,7 +16,7 @@ class OrderShareColorStatus extends StatelessWidget {
               color: Status_Color(baseStatus.status!)!,
             )),
         child: Text(baseStatus.name!,
-            style: const TextStyle(fontSize: 15, color: Colors.white)));
+            style: const TextStyle(fontSize: 14, color: Colors.white)));
   }
 
   // ignore: missing_return, non_constant_identifier_names

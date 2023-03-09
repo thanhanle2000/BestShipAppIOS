@@ -63,7 +63,7 @@ class _OrderListMapState extends State<OrderListMap> {
                     });
               }
               // Tắt loading khi tải dữ liệu bản đồ thành công
-              if (state.success) {
+              else {
                 Navigator.of(context).pop();
               }
               // kiểm tra khi không có đơn hàng trong danh sách -> thông báo
@@ -71,8 +71,7 @@ class _OrderListMapState extends State<OrderListMap> {
                 ScaffoldMessenger.of(context)
                   ..hideCurrentSnackBar()
                   ..showSnackBar(
-                    snackBar_message('Không có dữ liệu.', "warning"),
-                  );
+                      snackBar_message('Không có dữ liệu.', "warning"));
               }
             }, child:
                 BlocBuilder<MapBloc, MapBlocState>(builder: (context, state) {

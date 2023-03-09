@@ -35,7 +35,7 @@ class OrderItemCustomerState extends State<OrderItemCustomer> {
               child: Text(widget.data.customerPhone!,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 14,
                       color: fromHexColor(Constants.COLOR_APPBAR)))),
           const SizedBox(width: 5),
           GestureDetector(
@@ -49,26 +49,26 @@ class OrderItemCustomerState extends State<OrderItemCustomer> {
                         "success"),
                   );
               },
-              child: const Icon(Icons.content_copy_outlined, size: 15))
+              child: const Icon(Icons.content_copy_outlined, size: 14))
         ]),
         Text(widget.data.customerName!,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 15,
+                fontSize: 14,
                 color: fromHexColor(Constants.COLOR_APPBAR)))
       ]),
-      const SizedBox(height: 5),
+      const SizedBox(height: 3),
       Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Icon(Icons.my_location_outlined,
-            color: fromHexColor(Constants.COLOR_BUTTON), size: 15),
+            color: fromHexColor(Constants.COLOR_BUTTON), size: 14),
         const SizedBox(width: 4),
         Expanded(
             child: Wrap(children: [
           Text(widget.data.customerAddress!,
-              style: const TextStyle(fontSize: 17, color: Colours.textDefault))
+              style: const TextStyle(fontSize: 15, color: Colours.textDefault))
         ]))
       ]),
-      const SizedBox(height: 5),
+      const SizedBox(height: 3),
       Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +79,7 @@ class OrderItemCustomerState extends State<OrderItemCustomer> {
                 Text('${widget.data.wardname!} - ${widget.data.districtname!}',
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 14,
                         color: Colours.textDefault))
               ],
             )),
@@ -97,33 +97,33 @@ class OrderItemCustomerState extends State<OrderItemCustomer> {
                 child: Row(children: [
                   Text(widget.data.orderCode!,
                       style: const TextStyle(
-                          fontSize: 15,
+                          fontSize: 14,
                           color: Colours.textDefault,
                           fontWeight: FontWeight.bold)),
                   const SizedBox(width: 5),
-                  const Icon(Icons.content_copy_outlined, size: 15)
+                  const Icon(Icons.content_copy_outlined, size: 14)
                 ]))
           ]),
-      const SizedBox(height: 10),
+      const SizedBox(height: 6),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Row(children: [
           Icon(Icons.monetization_on,
-              color: fromHexColor(Constants.COLOR_BUTTON), size: 15),
+              color: fromHexColor(Constants.COLOR_BUTTON), size: 14),
           const SizedBox(width: 4),
           Text(oCcy.format(widget.data.codPrice),
               style: const TextStyle(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Colours.textDefault))
         ]),
         Row(children: [
           Icon(Icons.date_range,
-              color: fromHexColor(Constants.COLOR_BUTTON), size: 15),
+              color: fromHexColor(Constants.COLOR_BUTTON), size: 14),
           const SizedBox(width: 4),
           Text(
               DateFormat("dd-MM-yyyy")
                   .format(DateTime.parse(widget.data.orderDate!)),
-              style: const TextStyle(fontSize: 15, color: Colours.textDefault))
+              style: const TextStyle(fontSize: 14, color: Colours.textDefault))
         ])
       ]),
     ]);
