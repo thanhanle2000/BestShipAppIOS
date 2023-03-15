@@ -48,6 +48,8 @@ class MapRepository {
                   builder: (context) => Wrap(children: [
                         OrderListModalBottomSheet(
                             HasTitle: false,
+                            lonData: data.lng,
+                            latData:data.lat,
                             UI: OrderListMapInfoOrder(
                               data: data,
                               status: statusModels,

@@ -34,6 +34,8 @@ class OrderListGoogleMap extends StatelessWidget {
         myLocationButtonEnabled: true,
         myLocationEnabled: true,
         mapType: MapType.normal,
+        mapToolbarEnabled: true,
+        buildingsEnabled:true,
         onMapCreated: mapCreatedController);
   }
 }

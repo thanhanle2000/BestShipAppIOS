@@ -85,7 +85,7 @@ class _OrderProcessHeaderReportState extends State<OrderProcessHeaderReport> {
           },
         ),
         Container(
-            height: 52,
+            height: 54,
             color: Colors.grey[50],
             width: double.infinity,
             padding: const EdgeInsets.all(5),
