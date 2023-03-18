@@ -31,10 +31,6 @@ class OrderListModalBottomSheet extends StatefulWidget {
 class _OrderListModalBottomSheetState extends State<OrderListModalBottomSheet> {
   late final String isActives = Platform.operatingSystem;
 
-  void initState() {
-    super.initState();
-  }
-
   Future<void> backMapIos() async {
     var position = await GeolocatorPlatform.instance.getCurrentPosition(
         locationSettings: const LocationSettings(
@@ -53,44 +49,39 @@ class _OrderListModalBottomSheetState extends State<OrderListModalBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        isActives == "ios"
-            ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                SizedBox(
-                    height: 35,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          backMapIos();
-                        },
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                fromHexColor(Constants.COLOR_BUTTON))),
-                        child: const Text('Chuyển đến Map',
-                            style:
-                                TextStyle(fontSize: 14, color: Colors.white))))
-              ])
-            : const SizedBox(),
-        const SizedBox(height: 5),
-        Container(
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.0),
-                    topRight: Radius.circular(8.0))),
-            child: Center(
-                child: Column(children: [
-              widget.HasTitle!
-                  ? Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(widget.title!,
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)))
-                  : const SizedBox(),
-              widget.UI!
-            ]))),
-      ],
-    );
+    return Column(children: [
+      isActives == "ios"
+          ? Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              SizedBox(
+                  height: 35,
+                  child: ElevatedButton(
+                      onPressed: () => backMapIos(),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              fromHexColor(Constants.COLOR_BUTTON))),
+                      child: const Text('Chuyển đến Map',
+                          style: TextStyle(fontSize: 14, color: Colors.white))))
+            ])
+          : const SizedBox(),
+      const SizedBox(height: 5),
+      Container(
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8.0),
+                  topRight: Radius.circular(8.0))),
+          child: Center(
+              child: Column(children: [
+            widget.HasTitle!
+                ? Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(widget.title!,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)))
+                : const SizedBox(),
+            widget.UI!
+          ])))
+    ]);
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_app_best_shipp/Pages/payment_waiting_list/bloc/payment_w
 import 'package:flutter_app_best_shipp/Pages/payment_waiting_list/widgets/payment_waiting_list_header.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Shared/constants/constants.dart';
+import '../../Shared/utils/app_loading.dart';
 import '../../Shared/utils/app_utils.dart';
 import '../../Shared/widgets/base_widget/custom_appbar.dart';
 import '../../Shared/widgets/base_widget/snackbar_message.dart';
@@ -39,13 +40,7 @@ class _PaymentWaitingListState extends State<PaymentWaitingList> {
           listener: (context, state) {
         // Bật loading khi tải map
         if (!state.success) {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return Center(
-                    child: CircularProgressIndicator(
-                        color: fromHexColor(Constants.COLOR_BUTTON)));
-              });
+          app_loading(context);
         } else {
           Navigator.of(context).pop();
         }

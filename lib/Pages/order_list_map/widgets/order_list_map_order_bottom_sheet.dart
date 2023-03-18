@@ -133,22 +133,19 @@ class _OrderListMapInfoOrderState extends State<OrderListMapInfoOrder> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                    child: Wrap(
-                  children: [
+                  Expanded(
+                      child: Wrap(children: [
                     Text('${item.action_text}',
                         style: const TextStyle(
                             fontSize: 15, color: Colours.textDefault))
-                  ],
-                )),
-                const SizedBox(width: 0.7),
-                Text(
-                    DateFormat("HH:mm dd-MM-yyyy")
-                        .format(DateTime.parse(item.rowCreatedTime!)),
-                    style: const TextStyle(
-                        fontSize: 12, color: Colours.textDefault)),
-              ],
-            ));
+                  ])),
+                  const SizedBox(width: 0.7),
+                  Text(
+                      DateFormat("HH:mm dd-MM-yyyy")
+                          .format(DateTime.parse(item.rowCreatedTime!)),
+                      style: const TextStyle(
+                          fontSize: 12, color: Colours.textDefault))
+                ]));
     }).toList();
 
     if (!isActive && lstStatusHis.length > 2) {

@@ -6,6 +6,7 @@ import 'package:flutter_app_best_shipp/Pages/payment_shipper/widgets/payment_shi
 import 'package:flutter_app_best_shipp/Pages/payment_shipper/widgets/payment_shipper_item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Shared/constants/constants.dart';
+import '../../Shared/utils/app_loading.dart';
 import '../../Shared/utils/app_utils.dart';
 import '../../Shared/widgets/base_widget/endData.dart';
 import '../../Shared/widgets/base_widget/custom_appbar.dart';
@@ -40,13 +41,7 @@ class _PaymentShipperState extends State<PaymentShipper> {
             listener: (context, state) {
           // Bật loading khi tải data
           if (!state.success) {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return Center(
-                      child: CircularProgressIndicator(
-                          color: fromHexColor(Constants.COLOR_BUTTON)));
-                });
+            app_loading(context);
           }
           // tắt loading
           else {

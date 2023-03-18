@@ -11,6 +11,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../../Shared/constants/constants.dart';
 import '../../Shared/models/auth/auth_models.dart';
 import '../../Shared/preferences/preferences.dart';
+import '../../Shared/utils/app_loading.dart';
 import '../../Shared/utils/app_utils.dart';
 import '../../Shared/widgets/base_widget/endData.dart';
 import '../../Shared/widgets/base_widget/loadingIndicator.dart';
@@ -58,13 +59,7 @@ class _OrderProcessState extends State<OrderProcess> {
           // Bật loading khi tải map
           // ignore: unrelated_type_equality_checks
           if (state.status == "OrderProcessStatus.success") {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return Center(
-                      child: CircularProgressIndicator(
-                          color: fromHexColor(Constants.COLOR_BUTTON)));
-                });
+            app_loading(context);
           }
           // Tắt loading khi tải dữ liệu bản đồ thành công
           else {

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_best_shipp/Pages/order_scan/bloc/order_scan_bloc.dart';
 import 'package:flutter_app_best_shipp/Pages/order_scan/widgets/order_scan_button_filter.dart';
@@ -7,7 +9,9 @@ import 'package:flutter_app_best_shipp/presentation/repositories/order/order_res
 import 'package:intl/intl.dart';
 import '../../../Shared/blocs/theme/color.dart';
 import '../../../Shared/constants/constants.dart';
+import '../../../Shared/models/auth/auth_models.dart';
 import '../../../Shared/models/order_scan/order_scan_total.dart';
+import '../../../Shared/preferences/preferences.dart';
 import '../../../Shared/utils/app_utils.dart';
 import '../../../Shared/widgets/base_widget/snackbar_message.dart';
 import '../../order_list/order_list_screen.dart';
@@ -26,6 +30,8 @@ class OrderScanToday extends StatelessWidget {
       required this.date});
   @override
   Widget build(BuildContext context) {
+    String? name = Prefer.prefs?.getString('authenticationViewModel');
+    final username = AuthenticationViewModel.fromJson(jsonDecode(name!));
     final oCcy = NumberFormat("#,##0", "vi_VN");
     return Column(children: [
       OrderScanButtonFilter(
@@ -78,7 +84,7 @@ class OrderScanToday extends StatelessWidget {
       OrderScanCodTotal(
           color: fromHexColor(Constants.COLOR_BUTTON), data: dataTotalScan),
       GestureDetector(
-          onTap: () {
+          onTap: username.userType == 4 ? (){}: () {
             if (shopId != 0) {
               if (dataTotalScan.orderTotalRemain != 0) {
                 Navigator.push(

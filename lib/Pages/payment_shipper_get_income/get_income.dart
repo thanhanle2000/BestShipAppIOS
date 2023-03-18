@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Shared/constants/constants.dart';
 import '../../Shared/models/auth/auth_models.dart';
 import '../../Shared/preferences/preferences.dart';
+import '../../Shared/utils/app_loading.dart';
 import '../../Shared/utils/app_utils.dart';
 import '../../Shared/widgets/base_widget/custom_appbar.dart';
 import '../../Shared/widgets/base_widget/snackbar_message.dart';
@@ -51,13 +52,7 @@ class _GetIncomeState extends State<GetIncome> {
             listener: (context, state) {
           // // Bật loading khi tải data
           if (!state.success) {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return Center(
-                      child: CircularProgressIndicator(
-                          color: fromHexColor(Constants.COLOR_BUTTON)));
-                });
+            app_loading(context);
           }
           // tắt loading
           else {

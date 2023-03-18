@@ -4,6 +4,7 @@ import 'package:flutter_app_best_shipp/Pages/order_list_map/widgets/order_list_m
 import 'package:flutter_app_best_shipp/Pages/order_list_map/widgets/order_list_map_google_map.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../Shared/utils/app_loading.dart';
 import '../../Shared/widgets/base_widget/snackbar_message.dart';
 import 'bloc/map_bloc.dart';
 import '../../Shared/constants/constants.dart';
@@ -54,13 +55,7 @@ class _OrderListMapState extends State<OrderListMap> {
                 (context, state) {
               // Bật loading khi tải map
               if (!state.success) {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Center(
-                          child: CircularProgressIndicator(
-                              color: fromHexColor(Constants.COLOR_BUTTON)));
-                    });
+                app_loading(context);
               }
               // Tắt loading khi tải dữ liệu bản đồ thành công
               else {
