@@ -60,10 +60,9 @@ class OrderItemPaymentState extends State<OrderItemPayment> {
         Row(children: [
           !IsNullOrEmpty(widget.data.shopPhone!)
               ? GestureDetector(
-                  onTap: () async {
-                    // ignore: deprecated_member_use
-                    launch('tel://${widget.data.shopPhone}'); // phương thức gọi
-                  },
+                  onTap: () async =>
+                      // ignore: deprecated_member_use
+                      launch('tel://${widget.data.shopPhone}'),
                   child: Text(widget.data.shopPhone!,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,

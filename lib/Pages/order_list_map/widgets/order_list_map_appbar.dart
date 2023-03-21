@@ -2,26 +2,21 @@ import 'package:flutter/material.dart';
 import '../../../Shared/constants/constants.dart';
 import '../../../Shared/utils/app_utils.dart';
 
-class OrderListMapAppbar extends StatefulWidget {
+class OrderListMapAppbar extends StatelessWidget {
   final String title;
   const OrderListMapAppbar({super.key, required this.title});
 
-  @override
-  State<OrderListMapAppbar> createState() => _OrderListMapAppbarState();
-}
-
-class _OrderListMapAppbarState extends State<OrderListMapAppbar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
         elevation: 0,
         backgroundColor: fromHexColor(Constants.COLOR_APPBAR),
         centerTitle: true,
-        title: Text(widget.title),
+        title: Text(title),
         iconTheme: const IconThemeData(color: Colors.white),
         leading: IconButton(
-            // ignore: prefer_const_constructors
-            icon: Icon(Icons.arrow_back_ios_new_outlined, color: Colors.white),
+            icon: const Icon(Icons.arrow_back_ios_new_outlined,
+                color: Colors.white),
             onPressed: () => Navigator.pop(context)),
         actions: <Widget>[
           Builder(builder: (context) {

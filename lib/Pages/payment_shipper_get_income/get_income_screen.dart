@@ -13,19 +13,15 @@ class GetIcomeScreen extends StatelessWidget {
       {super.key,
       required PaymentRespository paymentRespository,
       required UserRepository userRepository})
-      // ignore: unnecessary_null_comparison
-      : assert(paymentRespository != null, userRepository != null),
-        _paymentRespository = paymentRespository,
+      : _paymentRespository = paymentRespository,
         _userRepository = userRepository;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GetIncomeBloc>(
-      create: (context) => GetIncomeBloc(
-          paymentRespository: _paymentRespository,
-          userRepository: _userRepository),
-      // ignore: prefer_const_constructors
-      child: GetIncome(),
-    );
+        create: (context) => GetIncomeBloc(
+            paymentRespository: _paymentRespository,
+            userRepository: _userRepository),
+        child: const GetIncome());
   }
 }

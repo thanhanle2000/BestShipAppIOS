@@ -21,10 +21,8 @@ class OrderListMapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<MapBloc>(
-      create: (context) => MapBloc(
-          mapRepository: _mapRepository, orderRespository: _orderRespository),
-      // ignore: prefer_const_constructors
-      child: OrderListMap(),
-    );
+        create: (context) => MapBloc(
+            mapRepository: _mapRepository, orderRespository: _orderRespository),
+        child: const OrderListMap());
   }
 }

@@ -47,9 +47,8 @@ class _OrderProcessDateRangeState extends State<OrderProcessDateRange> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
+    return Column(children: [
+      Container(
           decoration: BoxDecoration(
               color: Colors.grey[200],
               border: const Border(
@@ -57,12 +56,9 @@ class _OrderProcessDateRangeState extends State<OrderProcessDateRange> {
           alignment: Alignment.center,
           width: double.infinity,
           padding: const EdgeInsets.all(8.0),
-          child: const Text(
-            'Chọn mốc thời gian lọc',
-            style: TextStyle(fontSize: 18, color: Colours.classicText),
-          ),
-        ),
-        Column(
+          child: const Text('Chọn mốc thời gian lọc',
+              style: TextStyle(fontSize: 18, color: Colours.classicText))),
+      Column(
           children: lstDate
               .map((e) => RadioListTile<int>(
                     // ignore: prefer_const_constructors
@@ -83,24 +79,21 @@ class _OrderProcessDateRangeState extends State<OrderProcessDateRange> {
                       });
                     },
                   ))
-              .toList(),
-        ),
-        idShopSelect == 10
-            ? Container(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                width: double.infinity,
-                height: 40,
-                child: ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                    onPressed: () => pickDateRange(),
-                    child: Row(
+              .toList()),
+      idShopSelect == 10
+          ? Container(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              width: double.infinity,
+              height: 40,
+              child: ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                  onPressed: () => pickDateRange(),
+                  child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(
-                          Icons.date_range_rounded,
-                          color: Colors.blue,
-                        ),
+                        const Icon(Icons.date_range_rounded,
+                            color: Colors.blue),
                         Text(
                           IsNullOrEmpty(dateStart)
                               ? 'Chọn thời gian'
@@ -108,44 +101,31 @@ class _OrderProcessDateRangeState extends State<OrderProcessDateRange> {
                           style: const TextStyle(
                               fontSize: 16, color: Colours.classicText),
                         ),
-                        const Icon(
-                          Icons.keyboard_arrow_down_outlined,
-                          color: Colors.blue,
-                        )
-                      ],
-                    )),
-              )
-            : const SizedBox(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            PaymentShipperConfirm(
-              onpress: () async {
-                IsNullOrEmpty(dateStart)
-                    ? await getFilterShop(
-                        timeStart, timeEnd, widget.blocContext)
-                    : await getFilterShop(
-                        dateStart, dateEnd, widget.blocContext);
-                widget.date(date);
-                // ignore: use_build_context_synchronously
-                Navigator.pop(context);
-              },
-              title: 'Xác nhận',
-              colorString: Constants.COLOR_BUTTON,
-              lr: 40,
-            ),
-            PaymentShipperConfirm(
-              onpress: () {
-                Navigator.pop(context);
-              },
-              title: 'Đóng',
-              colorString: Constants.COLOR_APPBAR,
-              lr: 50,
-            )
-          ],
-        )
-      ],
-    );
+                        const Icon(Icons.keyboard_arrow_down_outlined,
+                            color: Colors.blue)
+                      ])))
+          : const SizedBox(),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        PaymentShipperConfirm(
+          onpress: () async {
+            IsNullOrEmpty(dateStart)
+                ? await getFilterShop(timeStart, timeEnd, widget.blocContext)
+                : await getFilterShop(dateStart, dateEnd, widget.blocContext);
+            widget.date(date);
+            // ignore: use_build_context_synchronously
+            Navigator.pop(context);
+          },
+          title: 'Xác nhận',
+          colorString: Constants.COLOR_BUTTON,
+          lr: 40,
+        ),
+        PaymentShipperConfirm(
+            onpress: () => Navigator.pop(context),
+            title: 'Đóng',
+            colorString: Constants.COLOR_APPBAR,
+            lr: 50)
+      ])
+    ]);
   }
 
   DateTimeRange daterange = DateTimeRange(
@@ -168,6 +148,7 @@ class _OrderProcessDateRangeState extends State<OrderProcessDateRange> {
     });
   }
 
+  // danh sách mốc thời gian
   List<DateRangeModels> lstDate = [
     DateRangeModels(
         id: 2,

@@ -23,26 +23,22 @@ class OrderProcessSidableLeft extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Padding(
+        child: Column(children: [
+      Expanded(
+          flex: 1,
+          child: Padding(
               padding: const EdgeInsets.all(3),
               child: OrderProcessActionCir(
-                lr: 7,
-                onTap: () {
-                  showdiasuccess(data, status);
-                },
-                title: 'Thành công',
-                color: fromHexColor(Constants.COLOR_BUTTON),
-                iconData: Icons.check_rounded,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: OrderProcessActionCir(
+                  lr: 7,
+                  onTap: () {
+                    showdiasuccess(data, status);
+                  },
+                  title: 'Thành công',
+                  color: fromHexColor(Constants.COLOR_BUTTON),
+                  iconData: Icons.check_rounded))),
+      Expanded(
+          flex: 1,
+          child: OrderProcessActionCir(
               lr: 5,
               onTap: () => Navigator.push(
                   context,
@@ -54,12 +50,8 @@ class OrderProcessSidableLeft extends StatelessWidget {
                           contextBloc: blocContext))),
               title: 'Báo hủy đơn',
               color: Colors.redAccent,
-              iconData: Icons.clear_outlined,
-            ),
-          )
-        ],
-      ),
-    );
+              iconData: Icons.clear_outlined))
+    ]));
   }
 
   // chuyển đổi trạng thái thành công
@@ -72,11 +64,10 @@ class OrderProcessSidableLeft extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(8.0))),
               actions: [
                 OrderProcessActionSuccess(
-                  data: data,
-                  status: status,
-                  mapBloc: orderBloc,
-                  contextBloc: blocContext,
-                )
+                    data: data,
+                    status: status,
+                    mapBloc: orderBloc,
+                    contextBloc: blocContext)
               ]);
         });
   }

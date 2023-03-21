@@ -22,27 +22,18 @@ class OrderProcessFilterChange extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 45,
-        alignment: Alignment.center,
-        color: color,
-        width: MediaQuery.of(context).size.width * 0.333,
-        padding: EdgeInsets.only(left: padleft),
-        child: Row(
-          children: [
-            Icon(
-              iconData,
-              color: colorIcon,
-            ),
-            const SizedBox(width: 3),
-            Text(
-              title.length > 10 ? '${title.substring(0, 10)}...' : title,
-              style: TextStyle(fontSize: 15, color: colorText),
-            ),
-          ],
-        ),
-      ),
-    );
+        onTap: onTap,
+        child: Container(
+            height: 45,
+            alignment: Alignment.center,
+            color: color,
+            width: MediaQuery.of(context).size.width * 0.333,
+            padding: EdgeInsets.only(left: padleft),
+            child: Row(children: [
+              Icon(iconData, color: colorIcon),
+              const SizedBox(width: 3),
+              Text(title.length > 10 ? '${title.substring(0, 10)}...' : title,
+                  style: TextStyle(fontSize: 15, color: colorText))
+            ])));
   }
 }

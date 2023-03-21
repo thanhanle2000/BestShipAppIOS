@@ -39,9 +39,7 @@ class OrderProcessActionPhoneNoPick extends StatelessWidget {
             color: fromHexColor(Constants.COLOR_BUTTON),
             hw: 10),
         OrderListButtonConfirmFilter(
-            onpress: () {
-              Navigator.pop(context);
-            },
+            onpress: () => Navigator.pop(context),
             title: 'Đóng',
             color: fromHexColor(Constants.COLOR_APPBAR),
             hw: 18)

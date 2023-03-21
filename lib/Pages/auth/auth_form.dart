@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Shared/blocs/theme/color.dart';
 import '../../Shared/constants/constants.dart';
 import '../../Shared/utils/app_utils.dart';
-import '../../Shared/widgets/base_widget/snackbar_loading.dart';
 import '../../Shared/widgets/base_widget/snackbar_message.dart';
 import 'bloc/authentication/authentication_bloc.dart';
 import 'bloc/login/login_bloc.dart';
@@ -21,10 +20,6 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
-  // final TextEditingController _userNameController =
-  //     TextEditingController(text: 'locxipo');
-  // final TextEditingController _passwordController =
-  //     TextEditingController(text: 'admin@114');
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -51,11 +46,11 @@ class _AuthFormState extends State<AuthForm> {
   void initState() {
     super.initState();
     _loginBloc = context.read<LoginBloc>();
-    _userNameController.addListener(_onUserNameChanged);
-    _passwordController.addListener(_onPasswordChanged);
+    _userNameController.addListener(onUserNameChanged);
+    _passwordController.addListener(onPasswordChanged);
   }
 
-  void _toggleVisibility() {
+  void toggleVisibility() {
     setState(() {
       _isPasswordHidden = !_isPasswordHidden;
     });
@@ -66,24 +61,25 @@ class _AuthFormState extends State<AuthForm> {
     final size = MediaQuery.of(context).size;
     bool isKeyboardShowing = MediaQuery.of(context).viewInsets.vertical > 0;
     return SafeArea(
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.grey[200],
-          body: BlocListener<LoginBloc, LoginState>(listener: (context, state) {
-            if (state.isSuccess) {
-              context
-                  .read<AuthenticationBloc>()
-                  .add(AuthenticationLoggedInEvent());
-            }
-            if (state.isFailure) {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  snackBar_message(state.error.toString(), "error"),
-                );
-            }
-          }, child: BlocBuilder<LoginBloc, LoginState>(
-            builder: (context, state) {
+        child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.grey[200],
+            body: BlocListener<LoginBloc, LoginState>(listener:
+                (context, state) {
+              if (state.isSuccess) {
+                context
+                    .read<AuthenticationBloc>()
+                    .add(AuthenticationLoggedInEvent());
+              }
+              if (state.isFailure) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    snackBar_message(state.error.toString(), "error"),
+                  );
+              }
+            }, child:
+                BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
               return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -111,10 +107,9 @@ class _AuthFormState extends State<AuthForm> {
                     Container(
                         height: 370,
                         width: double.infinity,
-                        // ignore: prefer_const_constructors
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: Colors.white,
-                            borderRadius: const BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(30.0),
                                 topRight: Radius.circular(30.0),
                                 bottomLeft: Radius.circular(30.0),
@@ -149,9 +144,7 @@ class _AuthFormState extends State<AuthForm> {
                                       AuthTextFieldPassword(
                                           hintText: 'Vui lòng nhập (*)',
                                           check: _isPasswordHidden,
-                                          onpress: () {
-                                            _toggleVisibility();
-                                          },
+                                          onpress: () => toggleVisibility(),
                                           myControllers: _passwordController,
                                           ispass: _isPasswordHidden,
                                           validator: (_) =>
@@ -167,20 +160,17 @@ class _AuthFormState extends State<AuthForm> {
                                             });
                                           }),
                                       AuthButtonConfirm(
-                                        isSubmitting: state.isSubmitting,
-                                        title: 'Đăng nhập',
-                                        onTap: isLoginButtonEnabled(state)
-                                            ? _onFormSubmitted
-                                            : null,
-                                        color: fromHexColor(
-                                            Constants.COLOR_BUTTON),
-                                        width: size.width,
-                                      )
+                                          isSubmitting: state.isSubmitting,
+                                          title: 'Đăng nhập',
+                                          onTap: isLoginButtonEnabled(state)
+                                              ? onFormSubmitted
+                                              : null,
+                                          color: fromHexColor(
+                                              Constants.COLOR_BUTTON),
+                                          width: size.width)
                                     ]))))
                   ]);
-            },
-          ))),
-    );
+            }))));
   }
 
   @override
@@ -190,15 +180,15 @@ class _AuthFormState extends State<AuthForm> {
     super.dispose();
   }
 
-  void _onUserNameChanged() {
+  void onUserNameChanged() {
     _loginBloc.add(UserNameChangedEvent(username: _userNameController.text));
   }
 
-  void _onPasswordChanged() {
+  void onPasswordChanged() {
     _loginBloc.add(PasswordChangedEvent(password: _passwordController.text));
   }
 
-  void _onFormSubmitted() {
+  void onFormSubmitted() {
     _loginBloc.add(LoginWithCredentialsPressedEvent(
         username: _userNameController.text,
         password: _passwordController.text));

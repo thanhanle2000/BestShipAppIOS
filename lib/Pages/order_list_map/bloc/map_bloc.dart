@@ -16,13 +16,13 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
   MapBloc(
       {required MapRepository mapRepository,
       required OrderRespository orderRespository})
-      : assert(mapRepository != null, orderRespository != null),
-        _mapRepository = mapRepository,
+      : _mapRepository = mapRepository,
         _orderRespository = orderRespository,
         super(MapBlocState.empty()) {
     on<MapBlocEvent>((event, emit) async {
       // khai báo dữ liệu đầu vào
       OrderListModels orderlistData = OrderListModels();
+      StatusModels statusModels = StatusModels();
       if (event is MapBlocStartedEvent) {
         emit(MapBlocState.empty());
         try {
@@ -53,7 +53,7 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
         LatLng initialPosition = await _mapRepository.getUserLocation();
 
         // lấy data cho trạng thái đơn hàng sau khi thực hiện chuyển trạng thái
-        final StatusModels data = await _orderRespository.getDataSuccess(
+        statusModels = await _orderRespository.getDataSuccess(
             event.shopId, event.code, event.shipper);
 
         // lấy data cho danh sách đơn hàng
@@ -78,12 +78,8 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
         emit(MapBlocState.empty());
         LatLng initialPosition = await _mapRepository.getUserLocation();
         // lấy data cho danh sách đơn hàng
-        final StatusModels data = await _orderRespository.getDataCancel(
-            event.shopId,
-            event.code,
-            event.shipper,
-            event.CancelId,
-            event.cancelReason);
+        statusModels = await _orderRespository.getDataCancel(event.shopId,
+            event.code, event.shipper, event.CancelId, event.cancelReason);
         orderlistData = await orderRespository.getDataForMap();
 
         // lấy data cho danh sách marker
@@ -106,7 +102,7 @@ class MapBloc extends Bloc<MapBlocEvent, MapBlocState> {
         LatLng initialPosition = await _mapRepository.getUserLocation();
 
         // lấy data cho trạng thái đơn hàng sau khi thực hiện chuyển trạng thái
-        final StatusModels data = await _orderRespository.getDataAction(
+        statusModels = await _orderRespository.getDataAction(
             event.shopId,
             event.code,
             event.action_item_id,

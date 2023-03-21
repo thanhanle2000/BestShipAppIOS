@@ -18,16 +18,11 @@ class OrderScanListItem extends StatelessWidget {
             padding: const EdgeInsets.only(left: 5, right: 10, top: 1),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Divider(
-                height: 1.0,
-                color: Colors.grey[400],
-              ),
+              Divider(height: 1.0, color: Colors.grey[400]),
               const SizedBox(height: 15),
-              Text(
-                name,
-                style:
-                    const TextStyle(fontSize: 15, color: Colours.textDefault),
-              )
+              Text(name,
+                  style:
+                      const TextStyle(fontSize: 15, color: Colours.textDefault))
             ])));
   }
 }

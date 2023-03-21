@@ -23,15 +23,12 @@ class OrderItemCustomer extends StatefulWidget {
 class OrderItemCustomerState extends State<OrderItemCustomer> {
   @override
   Widget build(BuildContext context) {
-    final oCcy = NumberFormat("#,##0", "vi_VN");
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Row(children: [
           GestureDetector(
-              onTap: () async {
-                // ignore: deprecated_member_use
-                launch('tel://${widget.data.customerPhone}'); // phương thức gọi
-              },
+              // ignore: deprecated_member_use
+              onTap: () async => launch('tel://${widget.data.customerPhone}'),
               child: Text(widget.data.customerPhone!,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -110,7 +107,7 @@ class OrderItemCustomerState extends State<OrderItemCustomer> {
           Icon(Icons.monetization_on,
               color: fromHexColor(Constants.COLOR_BUTTON), size: 14),
           const SizedBox(width: 4),
-          Text(oCcy.format(widget.data.codPrice),
+          Text(format_price(widget.data.codPrice),
               style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -125,7 +122,7 @@ class OrderItemCustomerState extends State<OrderItemCustomer> {
                   .format(DateTime.parse(widget.data.orderDate!)),
               style: const TextStyle(fontSize: 14, color: Colours.textDefault))
         ])
-      ]),
+      ])
     ]);
   }
 }

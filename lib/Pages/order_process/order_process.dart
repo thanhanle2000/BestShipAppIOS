@@ -14,7 +14,7 @@ import '../../Shared/preferences/preferences.dart';
 import '../../Shared/utils/app_loading.dart';
 import '../../Shared/utils/app_utils.dart';
 import '../../Shared/widgets/base_widget/endData.dart';
-import '../../Shared/widgets/base_widget/loadingIndicator.dart';
+import '../../Shared/widgets/base_widget/loading_Indicator.dart';
 import '../../Shared/widgets/base_widget/snackbar_message.dart';
 import '../order_widgets_shared/order_item.dart';
 import 'bloc/order_process_bloc.dart';
@@ -33,18 +33,18 @@ class _OrderProcessState extends State<OrderProcess> {
   late OrderProcessBloc orderBloc;
   String sorts = '';
   String? name = Prefer.prefs?.getString('authenticationViewModel');
+  late final username = AuthenticationViewModel.fromJson(jsonDecode(name!));
   @override
   void initState() {
     super.initState();
     orderBloc = context.read<OrderProcessBloc>();
     orderBloc.add(OrderProcessStartedEvent());
     orderBloc.add(OrderProcessKeyEvent(key: ''));
-    _scrollController.addListener(_onScroll);
+    _scrollController.addListener(onScroll);
   }
 
   @override
   Widget build(BuildContext context) {
-    final username = AuthenticationViewModel.fromJson(jsonDecode(name!));
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.grey[200],
@@ -56,7 +56,7 @@ class _OrderProcessState extends State<OrderProcess> {
                 blocContext: context)),
         body: BlocListener<OrderProcessBloc, OrderProcessState>(
             listener: (context, state) {
-          // Bật loading khi tải map
+          // Bật loading khi tải data
           // ignore: unrelated_type_equality_checks
           if (state.status == "OrderProcessStatus.success") {
             app_loading(context);
@@ -100,55 +100,58 @@ class _OrderProcessState extends State<OrderProcess> {
                                   'Cập nhật dữ liệu thành công.', "success"));
                           },
                           child: ListView.builder(
-                            itemBuilder: (BuildContext context, int index) {
-                              if (index >= state.lstData.length) {
-                                return (state.total == state.lstData.length
-                                    ? endData()
-                                    : loadingIndicator());
-                              } else {
-                                return Slidable(
-                                    startActionPane: state.lstData[index]
-                                                .baseStatus?.status ==
-                                            4
-                                        ? ActionPane(
-                                            extentRatio: 0.31,
-                                            motion: const ScrollMotion(),
-                                            children: [
-                                                OrderProcessSidableLeft(
-                                                    status: state.actionStatus!,
-                                                    data: state.lstData[index],
-                                                    orderBloc: orderBloc,
-                                                    blocContext: context)
-                                              ])
-                                        : const ActionPane(
-                                            motion: ScrollMotion(),
-                                            children: []),
-                                    endActionPane: state.lstData[index]
-                                                .baseStatus?.status ==
-                                            4
-                                        ? ActionPane(
-                                            extentRatio: 0.62,
-                                            motion: const ScrollMotion(),
-                                            children: [
-                                                OrderProcessSidableRight(
-                                                    status: state.actionStatus!,
-                                                    data: state.lstData[index],
-                                                    orderBloc: orderBloc,
-                                                    blocContext: context)
-                                              ])
-                                        : const ActionPane(
-                                            motion: ScrollMotion(),
-                                            children: []),
-                                    child: OrderShareItem(
-                                        data: state.lstData[index],
-                                        isActiveStatus: false));
-                              }
-                            },
-                            itemCount: state.hasReachedMax
-                                ? state.lstData.length
-                                : state.lstData.length + 1,
-                            controller: _scrollController,
-                          )))
+                              itemBuilder: (BuildContext context, int index) {
+                                if (index >= state.lstData.length) {
+                                  return (state.total == state.lstData.length
+                                      ? endData()
+                                      : loadingIndicator());
+                                } else {
+                                  return Slidable(
+                                      startActionPane: state.lstData[index]
+                                                  .baseStatus?.status ==
+                                              4
+                                          ? ActionPane(
+                                              extentRatio: 0.31,
+                                              motion: const ScrollMotion(),
+                                              children: [
+                                                  OrderProcessSidableLeft(
+                                                      status:
+                                                          state.actionStatus!,
+                                                      data:
+                                                          state.lstData[index],
+                                                      orderBloc: orderBloc,
+                                                      blocContext: context)
+                                                ])
+                                          : const ActionPane(
+                                              motion: ScrollMotion(),
+                                              children: []),
+                                      endActionPane: state.lstData[index]
+                                                  .baseStatus?.status ==
+                                              4
+                                          ? ActionPane(
+                                              extentRatio: 0.62,
+                                              motion: const ScrollMotion(),
+                                              children: [
+                                                  OrderProcessSidableRight(
+                                                      status:
+                                                          state.actionStatus!,
+                                                      data:
+                                                          state.lstData[index],
+                                                      orderBloc: orderBloc,
+                                                      blocContext: context)
+                                                ])
+                                          : const ActionPane(
+                                              motion: ScrollMotion(),
+                                              children: []),
+                                      child: OrderShareItem(
+                                          data: state.lstData[index],
+                                          isActiveStatus: false));
+                                }
+                              },
+                              itemCount: state.hasReachedMax
+                                  ? state.lstData.length
+                                  : state.lstData.length + 1,
+                              controller: _scrollController)))
                 ]);
         })));
   }
@@ -175,12 +178,12 @@ class _OrderProcessState extends State<OrderProcess> {
   @override
   void dispose() {
     _scrollController
-      ..removeListener(_onScroll)
+      ..removeListener(onScroll)
       ..dispose();
     super.dispose();
   }
 
-  void _onScroll() {
+  void onScroll() {
     if (_isBottom) {
       context.read<OrderProcessBloc>().add(OrderProcessStartedEvent());
     }

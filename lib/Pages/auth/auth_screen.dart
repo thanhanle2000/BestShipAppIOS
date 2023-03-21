@@ -8,16 +8,12 @@ class AuthScreen extends StatelessWidget {
   final UserRepository _userRepository;
 
   const AuthScreen({super.key, required UserRepository userRepository})
-      // ignore: unnecessary_null_comparison
-      : assert(userRepository != null),
-        _userRepository = userRepository;
+      : _userRepository = userRepository;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LoginBloc>(
-      create: (context) => LoginBloc(userRepository: _userRepository),
-      // ignore: prefer_const_constructors
-      child: AuthForm(),
-    );
+        create: (context) => LoginBloc(userRepository: _userRepository),
+        child: const AuthForm());
   }
 }

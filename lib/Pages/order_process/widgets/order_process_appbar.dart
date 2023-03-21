@@ -70,49 +70,44 @@ class _OrderProcessAppbarState extends State<OrderProcessAppbar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_ios)),
-      elevation: 0,
-      backgroundColor: fromHexColor(Constants.COLOR_APPBAR),
-      centerTitle: true,
-      title: Text(widget.title),
-      iconTheme: const IconThemeData(color: Colors.white),
-      actions: [
-        IconButton(
-            onPressed: () async {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  snackBar_message('Cập nhật dữ liệu thành công.', "success"),
-                );
-              await getStarted(widget.blocContext);
-            },
-            icon: const Icon(Icons.loop_outlined)),
-        IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => OrderProcessFilterTextField(
-                        orderBloc: widget.orderBloc,
-                        blocContext: widget.blocContext,
-                        order: getOrder,
-                        orderCode: getOrderCode,
-                        userName: getUserName,
-                      )),
-            );
-          },
-          icon: (IsNullOrEmpty(order) &&
-                  IsNullOrEmpty(orderCode) &&
-                  IsNullOrEmpty(userName))
-              ? const Icon(Icons.search_rounded)
-              : Icon(
-                  Icons.search_rounded,
-                  color: fromHexColor(Constants.COLOR_BUTTON),
-                ),
-        )
-      ],
-    );
+        leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.arrow_back_ios)),
+        elevation: 0,
+        backgroundColor: fromHexColor(Constants.COLOR_APPBAR),
+        centerTitle: true,
+        title: Text(widget.title),
+        iconTheme: const IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    snackBar_message('Cập nhật dữ liệu thành công.', "success"),
+                  );
+                await getStarted(widget.blocContext);
+              },
+              icon: const Icon(Icons.loop_outlined)),
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => OrderProcessFilterTextField(
+                              orderBloc: widget.orderBloc,
+                              blocContext: widget.blocContext,
+                              order: getOrder,
+                              orderCode: getOrderCode,
+                              userName: getUserName,
+                            )));
+              },
+              icon: (IsNullOrEmpty(order) &&
+                      IsNullOrEmpty(orderCode) &&
+                      IsNullOrEmpty(userName))
+                  ? const Icon(Icons.search_rounded)
+                  : Icon(Icons.search_rounded,
+                      color: fromHexColor(Constants.COLOR_BUTTON)))
+        ]);
   }
 }

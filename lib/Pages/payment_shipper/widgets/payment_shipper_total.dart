@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app_best_shipp/Shared/utils/app_utils.dart';
 import 'package:intl/intl.dart';
 
 import '../../../Shared/blocs/theme/color.dart';
@@ -15,7 +16,6 @@ class PaymentShipperTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final oCcy = NumberFormat("#,##0", "vi_VN");
     String? name = Prefer.prefs?.getString('authenticationViewModel');
     final username = AuthenticationViewModel.fromJson(jsonDecode(name!));
     return Column(children: [
@@ -24,7 +24,7 @@ class PaymentShipperTotal extends StatelessWidget {
           Text('COD: ',
               style: TextStyle(fontSize: 15, color: Colors.grey[600])),
           const SizedBox(width: 4),
-          Text(oCcy.format(data.totalCOD),
+          Text(format_price(data.totalCOD),
               style: const TextStyle(
                   fontSize: 15,
                   color: Colours.classicText,
@@ -33,7 +33,7 @@ class PaymentShipperTotal extends StatelessWidget {
         Row(children: [
           Text('Ship: ',
               style: TextStyle(fontSize: 15, color: Colors.grey[600])),
-          Text(oCcy.format(data.receivedPrice),
+          Text(format_price(data.receivedPrice),
               style: const TextStyle(
                   fontSize: 15,
                   color: Colours.classicText,
@@ -48,7 +48,7 @@ class PaymentShipperTotal extends StatelessWidget {
                 Text('Tổng cộng:',
                     style: TextStyle(fontSize: 15, color: Colors.grey[600])),
                 const SizedBox(width: 4),
-                Text(oCcy.format(data.totalPrice),
+                Text(format_price(data.totalPrice),
                     style: const TextStyle(
                         fontSize: 15,
                         color: Colours.classicText,
@@ -59,7 +59,7 @@ class PaymentShipperTotal extends StatelessWidget {
             Text('Còn lại:',
                 style: TextStyle(fontSize: 15, color: Colors.grey[600])),
             const SizedBox(width: 4),
-            Text(oCcy.format(data.totalRemain),
+            Text(format_price(data.totalRemain),
                 style: const TextStyle(
                     fontSize: 15,
                     color: Colours.classicText,

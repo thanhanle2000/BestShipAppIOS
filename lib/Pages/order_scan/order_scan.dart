@@ -36,6 +36,7 @@ class _OrderScanState extends State<OrderScan> {
   bool goodToGo = true;
   String dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
   String? name = Prefer.prefs?.getString('authenticationViewModel');
+  late final username = AuthenticationViewModel.fromJson(jsonDecode(name!));
   @override
   void initState() {
     super.initState();
@@ -67,20 +68,15 @@ class _OrderScanState extends State<OrderScan> {
 
   @override
   Widget build(BuildContext context) {
-    final username = AuthenticationViewModel.fromJson(jsonDecode(name!));
     return GestureDetector(
-        onTap: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: Colors.grey[200],
-            // ignore: prefer_const_constructors
-            appBar: PreferredSize(
-                preferredSize: const Size.fromHeight(45.0),
-                child: const CustomAppbar(title: 'Quét đơn hàng')),
-            // ignore: prefer_const_constructors
-            drawer: NavDrawer('/'),
+            appBar: const PreferredSize(
+                preferredSize: Size.fromHeight(45.0),
+                child: CustomAppbar(title: 'Quét đơn hàng')),
+            drawer: const NavDrawer('/'),
             body: BlocListener<OrderScanBloc, OrderScanState>(
                 listener: (context, state) {},
                 child: BlocBuilder<OrderScanBloc, OrderScanState>(
@@ -91,9 +87,7 @@ class _OrderScanState extends State<OrderScan> {
                         title: 'Nhập và quét bằng máy Barcode',
                         icon: Icons.settings_remote_outlined,
                         controller: _barcodeController,
-                        onpress: () {
-                          _barcodeController.clear();
-                        },
+                        onpress: () => _barcodeController.clear(),
                         iconfx: Icons.clear,
                         onFocus: () => FocusScope.of(context).requestFocus(),
                         onSubmit: (value) async {

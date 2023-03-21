@@ -25,8 +25,6 @@ class MapConvertItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final oCcy = NumberFormat("#,##0", "vi_VN");
-
     return GestureDetector(
       onTap: () async {
         await showModalBottomSheet(
@@ -86,7 +84,7 @@ class MapConvertItem extends StatelessWidget {
                 Icon(Icons.monetization_on,
                     color: fromHexColor(Constants.COLOR_BUTTON), size: 15),
                 const SizedBox(width: 4),
-                Text(oCcy.format(data.codPrice),
+                Text(format_price(data.codPrice),
                     style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,

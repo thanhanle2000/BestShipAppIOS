@@ -31,30 +31,29 @@ class _PaymentWaitingListState extends State<PaymentWaitingList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.grey[100],
-      appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(45.0),
-          child: CustomAppbar(title: 'Danh sách chờ thanh toán')),
-      body: BlocListener<PaymentWaitingBloc, PaymentWaitingListState>(
-          listener: (context, state) {
-        // Bật loading khi tải map
-        if (!state.success) {
-          app_loading(context);
-        } else {
-          Navigator.of(context).pop();
-        }
-        if (state.status == 'fail') {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              snackBar_message('Không có dữ liệu.', "warning"),
-            );
-        }
-      }, child: BlocBuilder<PaymentWaitingBloc, PaymentWaitingListState>(
-              builder: (context, state) {
-        return Column(
-          children: [
+        resizeToAvoidBottomInset: true,
+        backgroundColor: Colors.grey[100],
+        appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(45.0),
+            child: CustomAppbar(title: 'Danh sách chờ thanh toán')),
+        body: BlocListener<PaymentWaitingBloc, PaymentWaitingListState>(
+            listener: (context, state) {
+          // Bật loading khi tải map
+          if (!state.success) {
+            app_loading(context);
+          } else {
+            Navigator.of(context).pop();
+          }
+          if (state.status == 'fail') {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                snackBar_message('Không có dữ liệu.', "warning"),
+              );
+          }
+        }, child: BlocBuilder<PaymentWaitingBloc, PaymentWaitingListState>(
+                builder: (context, state) {
+          return Column(children: [
             PaymentWaitingListHeader(data: state.paymentShip),
             Expanded(
                 child: RefreshIndicator(
@@ -63,9 +62,7 @@ class _PaymentWaitingListState extends State<PaymentWaitingList> {
                     onRefresh: () async =>
                         paymentBloc.add(PaymentWaitingListStartedEvent()),
                     child: OrderItemDetails(orderModel: state.lstOrder)))
-          ],
-        );
-      })),
-    );
+          ]);
+        })));
   }
 }

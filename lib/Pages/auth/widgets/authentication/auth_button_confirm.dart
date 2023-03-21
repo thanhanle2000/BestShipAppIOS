@@ -22,19 +22,16 @@ class AuthButtonConfirm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
-      child: ElevatedButton(
-          onPressed: onTap,
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(
-                  fromHexColor(Constants.COLOR_BUTTON))),
-          child: isSubmitting!
-              ? loading()
-              : Center(
-                  child: Text(
-                  title,
-                  style: const TextStyle(color: Colors.white),
-                ))),
-    );
+        height: 50,
+        child: ElevatedButton(
+            onPressed: onTap,
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    fromHexColor(Constants.COLOR_BUTTON))),
+            child: isSubmitting!
+                ? loading()
+                : Center(
+                    child: Text(title,
+                        style: const TextStyle(color: Colors.white)))));
   }
 }

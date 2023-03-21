@@ -73,9 +73,8 @@ class _OrderProcessFilterState extends State<OrderProcessFilter> {
     final double itemWidth = size.width / 2;
     final double itemHeightDate = (size.height - kToolbarHeight - 35) / 2.3;
     final double itemWidthDate = size.width / 2;
-    return Row(
-      children: [
-        OrderProcessFilterChange(
+    return Row(children: [
+      OrderProcessFilterChange(
           title: IsNullOrEmpty(titleShop) ? 'Shop' : titleShop,
           onTap: () async {
             await Future.delayed(const Duration(milliseconds: 500), () async {
@@ -98,9 +97,8 @@ class _OrderProcessFilterState extends State<OrderProcessFilter> {
                             },
                             title: 'Nhập vào Shop cần tìm',
                             icon: Icons.search_rounded,
-                            onchanged: (value) async {
-                              await getListShop(value);
-                            }),
+                            onchanged: (value) async =>
+                                await getListShop(value)),
                         Expanded(
                             child: Scrollbar(
                                 child: ListView.builder(
@@ -108,16 +106,15 @@ class _OrderProcessFilterState extends State<OrderProcessFilter> {
                                     itemBuilder: (c, i) {
                                       var e = widget.dataListShop[i];
                                       return OrderScanListItem(
-                                        onTap: () async {
-                                          setState(() {
-                                            titleShop = e.name!;
-                                            getFilterShop(
-                                                e.id!, widget.blocContext);
-                                            Navigator.pop(context);
-                                          });
-                                        },
-                                        name: e.name!,
-                                      );
+                                          onTap: () async {
+                                            setState(() {
+                                              titleShop = e.name!;
+                                              getFilterShop(
+                                                  e.id!, widget.blocContext);
+                                              Navigator.pop(context);
+                                            });
+                                          },
+                                          name: e.name!);
                                     })))
                       ]))));
             });
@@ -130,38 +127,37 @@ class _OrderProcessFilterState extends State<OrderProcessFilter> {
           colorIcon: (IsNullOrEmpty(titleShop) || widget.isCheck == true)
               ? Colors.grey[600]!
               : fromHexColor(Constants.COLOR_BUTTON),
-          iconData: Icons.shopping_cart,
-        ),
-        OrderProcessFilterChange(
-          title: IsNullOrEmpty(dateNow) ? 'Ngày' : dateNow,
-          onTap: () async {
-            await Future.delayed(const Duration(milliseconds: 100), () async {
-              await showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => ModalBottomSheet(
-                      title: '',
-                      height: (itemWidthDate / itemHeightDate),
-                      hasTitle: false,
-                      ui: OrderProcessDateRange(
-                        date: getDate,
-                        orderBloc: widget.orderBloc,
-                        blocContext: widget.blocContext,
-                      )));
-            });
-          },
-          colorText: (IsNullOrEmpty(dateNow) || widget.isCheck == true)
-              ? Colors.grey[600]!
-              : fromHexColor(Constants.COLOR_BUTTON),
-          color: Colors.grey[100]!,
-          colorIcon: (IsNullOrEmpty(dateNow) || widget.isCheck == true)
-              ? Colors.grey[600]!
-              : fromHexColor(Constants.COLOR_BUTTON),
-          padleft: 5,
-          iconData: Icons.date_range_rounded,
-        ),
-        OrderProcessFilterChange(
+          iconData: Icons.shopping_cart),
+      OrderProcessFilterChange(
+        title: IsNullOrEmpty(dateNow) ? 'Ngày' : dateNow,
+        onTap: () async {
+          await Future.delayed(const Duration(milliseconds: 100), () async {
+            await showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (context) => ModalBottomSheet(
+                    title: '',
+                    height: (itemWidthDate / itemHeightDate),
+                    hasTitle: false,
+                    ui: OrderProcessDateRange(
+                      date: getDate,
+                      orderBloc: widget.orderBloc,
+                      blocContext: widget.blocContext,
+                    )));
+          });
+        },
+        colorText: (IsNullOrEmpty(dateNow) || widget.isCheck == true)
+            ? Colors.grey[600]!
+            : fromHexColor(Constants.COLOR_BUTTON),
+        color: Colors.grey[100]!,
+        colorIcon: (IsNullOrEmpty(dateNow) || widget.isCheck == true)
+            ? Colors.grey[600]!
+            : fromHexColor(Constants.COLOR_BUTTON),
+        padleft: 5,
+        iconData: Icons.date_range_rounded,
+      ),
+      OrderProcessFilterChange(
           title: titlteStatus.isEmpty ? 'Trạng thái' : titlteStatus.toString(),
           onTap: () async {
             await Future.delayed(const Duration(milliseconds: 100), () async {
@@ -189,9 +185,7 @@ class _OrderProcessFilterState extends State<OrderProcessFilter> {
               ? Colors.grey[600]!
               : fromHexColor(Constants.COLOR_BUTTON),
           padleft: 5,
-          iconData: Icons.fact_check_rounded,
-        ),
-      ],
-    );
+          iconData: Icons.fact_check_rounded)
+    ]);
   }
 }

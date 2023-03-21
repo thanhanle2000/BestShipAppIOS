@@ -29,7 +29,7 @@ class OrderListMapStatusSuccess extends StatelessWidget {
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         OrderListButtonConfirmFilter(
             onpress: () async {
-              await _onSuccess(data.shopId!, data.orderCode!, data.shipper!,
+              await onSuccess(data.shopId!, data.orderCode!, data.shipper!,
                   status, contextBloc);
               // ignore: use_build_context_synchronously
               Navigator.pop(context);
@@ -40,9 +40,7 @@ class OrderListMapStatusSuccess extends StatelessWidget {
             color: fromHexColor(Constants.COLOR_BUTTON),
             hw: 10),
         OrderListButtonConfirmFilter(
-            onpress: () {
-              Navigator.pop(context);
-            },
+            onpress: () => Navigator.pop(context),
             title: 'Đóng',
             color: fromHexColor(Constants.COLOR_APPBAR),
             hw: 18)
@@ -52,7 +50,7 @@ class OrderListMapStatusSuccess extends StatelessWidget {
 
   // hàm xử lí chuyển trạng thái thành công
   // ignore: body_might_complete_normally_nullable
-  Future<void>? _onSuccess(int shopId, String code, String shipper,
+  Future<void>? onSuccess(int shopId, String code, String shipper,
       StatusData status, BuildContext context) {
     mapBloc.add(MapBlocEventSuccessEvent(
         shopId: shopId,

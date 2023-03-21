@@ -29,7 +29,7 @@ class OrderListButtonConfirmFilter extends StatelessWidget {
                 padding: EdgeInsets.only(left: hw, right: hw),
                 height: 50,
                 child: Center(
-                  child: Text(title, style: const TextStyle(fontSize: 18)),
-                ))));
+                    child:
+                        Text(title, style: const TextStyle(fontSize: 18))))));
   }
 }

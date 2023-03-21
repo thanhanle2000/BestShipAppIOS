@@ -110,10 +110,9 @@ class _GetIncomeTextFieldState extends State<GetIncomeTextField> {
                                         },
                                         title: 'Nhập Người lấy hàng cần tìm',
                                         icon: Icons.supervisor_account_outlined,
-                                        onFieldSubmitted: (value) async {
-                                          await getListUser(
-                                              _userController.text);
-                                        }),
+                                        onFieldSubmitted: (value) async =>
+                                            await getListUser(
+                                                _userController.text)),
                                     Expanded(
                                         child: Scrollbar(
                                             child: ListView.builder(

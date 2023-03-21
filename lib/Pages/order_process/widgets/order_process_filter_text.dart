@@ -53,91 +53,65 @@ class _OrderProcessFilterTextFieldState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(45.0),
-          child: CustomAppbar(
-            title: 'Tìm kiếm đơn hàng',
-          )),
-      body: Container(
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+        appBar: const PreferredSize(
+            preferredSize: Size.fromHeight(45.0),
+            child: CustomAppbar(title: 'Tìm kiếm đơn hàng')),
+        body: Container(
+            color: Colors.white,
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 const SizedBox(height: 15),
                 const Padding(
-                  padding: EdgeInsets.only(left: 15, bottom: 5),
-                  child: Text(
-                    'Tìm kiếm theo mã vận đơn:',
-                    style: TextStyle(fontSize: 16, color: Colours.classicText),
-                  ),
-                ),
+                    padding: EdgeInsets.only(left: 15, bottom: 5),
+                    child: Text('Tìm kiếm theo mã vận đơn:',
+                        style: TextStyle(
+                            fontSize: 16, color: Colours.classicText))),
                 Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: OrderProcessTextFormFields(
-                    iconData: Icons.filter_frames,
-                    title: 'Nhập vào mã vận đơn',
-                    controller: orderController,
-                    onSubmit: (value) async {},
-                    onPressed: () async {
-                      orderController.clear();
-                    },
-                    onTap: () async {
-                      final value = await FlutterClipboard.paste();
-                      orderController.text = value;
-                    },
-                  ),
-                ),
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: OrderProcessTextFormFields(
+                        iconData: Icons.filter_frames,
+                        title: 'Nhập vào mã vận đơn',
+                        controller: orderController,
+                        onSubmit: (value) async {},
+                        onPressed: () async => orderController.clear(),
+                        onTap: () async {
+                          final value = await FlutterClipboard.paste();
+                          orderController.text = value;
+                        })),
                 const SizedBox(height: 15),
                 const Padding(
-                  padding: EdgeInsets.only(left: 15, bottom: 5),
-                  child: Text(
-                    'Tìm kiếm theo mã đơn hàng:',
-                    style: TextStyle(fontSize: 16, color: Colours.classicText),
-                  ),
-                ),
+                    padding: EdgeInsets.only(left: 15, bottom: 5),
+                    child: Text('Tìm kiếm theo mã đơn hàng:',
+                        style: TextStyle(
+                            fontSize: 16, color: Colours.classicText))),
                 Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: OrderProcessTextFormFields(
-                    iconData: Icons.assignment_late_rounded,
-                    title: 'Nhập vào mã đơn hàng',
-                    controller: orderCodeController,
-                    onSubmit: (value) {},
-                    onPressed: () async {
-                      orderCodeController.clear();
-                    },
-                    onTap: () async {},
-                  ),
-                ),
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: OrderProcessTextFormFields(
+                        iconData: Icons.assignment_late_rounded,
+                        title: 'Nhập vào mã đơn hàng',
+                        controller: orderCodeController,
+                        onSubmit: (value) {},
+                        onPressed: () async => orderCodeController.clear(),
+                        onTap: () async {})),
                 const SizedBox(height: 15),
                 const Padding(
-                  padding: EdgeInsets.only(left: 15, bottom: 5),
-                  child: Text(
-                    'Tìm kiếm theo tên khách hàng:',
-                    style: TextStyle(fontSize: 16, color: Colours.classicText),
-                  ),
-                ),
+                    padding: EdgeInsets.only(left: 15, bottom: 5),
+                    child: Text('Tìm kiếm theo tên khách hàng:',
+                        style: TextStyle(
+                            fontSize: 16, color: Colours.classicText))),
                 Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: OrderProcessTextFormFields(
-                    iconData: Icons.supervisor_account,
-                    title: 'Nhập vào tên khách hàng',
-                    controller: nameController,
-                    onSubmit: (value) {},
-                    onPressed: () async {
-                      nameController.clear();
-                    },
-                    onTap: () async {},
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 40),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: OrderProcessTextFormFields(
+                        iconData: Icons.supervisor_account,
+                        title: 'Nhập vào tên khách hàng',
+                        controller: nameController,
+                        onSubmit: (value) {},
+                        onPressed: () async => nameController.clear(),
+                        onTap: () async {}))
+              ]),
+              const SizedBox(height: 40),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 PaymentShipperConfirm(
                   onpress: () async {
                     if (IsNullOrEmpty(orderController.text) &&
@@ -169,23 +143,18 @@ class _OrderProcessFilterTextFieldState
                   lr: 40,
                 ),
                 PaymentShipperConfirm(
-                  onpress: () {
-                    onSaved('', '', '');
-                    widget.order('');
-                    widget.orderCode('');
-                    widget.userName('');
-                    Navigator.pop(context);
-                  },
-                  title: 'Đóng',
-                  colorString: Constants.COLOR_APPBAR,
-                  lr: 50,
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+                    onpress: () {
+                      onSaved('', '', '');
+                      widget.order('');
+                      widget.orderCode('');
+                      widget.userName('');
+                      Navigator.pop(context);
+                    },
+                    title: 'Đóng',
+                    colorString: Constants.COLOR_APPBAR,
+                    lr: 50)
+              ])
+            ])));
   }
 
   // sự kiện lọc theo textfiled

@@ -9,14 +9,13 @@ class CustomAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_ios)),
-      elevation: 0,
-      backgroundColor: fromHexColor(Constants.COLOR_APPBAR),
-      centerTitle: true,
-      title: Text(title),
-      iconTheme: const IconThemeData(color: Colors.white),
-    );
+        leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.arrow_back_ios)),
+        elevation: 0,
+        backgroundColor: fromHexColor(Constants.COLOR_APPBAR),
+        centerTitle: true,
+        title: Text(title),
+        iconTheme: const IconThemeData(color: Colors.white));
   }
 }

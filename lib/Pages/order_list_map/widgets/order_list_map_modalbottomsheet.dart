@@ -31,9 +31,11 @@ class OrderListModalBottomSheet extends StatefulWidget {
 }
 
 class _OrderListModalBottomSheetState extends State<OrderListModalBottomSheet> {
+  // kiểm tra thiết bị đang ở hệ điều hành nào
   late final String isActives = Platform.operatingSystem;
 
   Future<void> backMapIos() async {
+    // lấy vị trí mặc định / real time
     var position = await GeolocatorPlatform.instance.getCurrentPosition(
         locationSettings: const LocationSettings(
             accuracy: LocationAccuracy.bestForNavigation));

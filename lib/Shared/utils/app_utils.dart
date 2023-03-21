@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_best_shipp/presentation/repositories/user/user_repository.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../Pages/auth/auth_screen.dart';
 import '../../Pages/connect/connectofff.dart';
 import '../../presentation/services/dialogs/dialog_service.dart';
@@ -69,6 +70,14 @@ bool IsNullOrEmpty(String key) {
   if (key == '' || key == null) _isNull = true;
 
   return _isNull;
+}
+
+// format price
+
+// ignore: non_constant_identifier_names
+String format_price(int? price) {
+  final oCcy = NumberFormat("#,##0", "vi_VN");
+  return oCcy.format(price);
 }
 
 MaterialColor fromHexColorMater(String hexString) {

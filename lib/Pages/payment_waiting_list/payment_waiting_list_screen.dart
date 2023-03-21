@@ -9,17 +9,13 @@ class PaymentWaitingListScreen extends StatelessWidget {
   final PaymentRespository _paymentRespository;
   const PaymentWaitingListScreen(
       {super.key, required PaymentRespository paymentRespository})
-      // ignore: unnecessary_null_comparison
-      : assert(paymentRespository != null),
-        _paymentRespository = paymentRespository;
+      : _paymentRespository = paymentRespository;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PaymentWaitingBloc>(
-      create: (context) =>
-          PaymentWaitingBloc(paymentRespository: _paymentRespository),
-      // ignore: prefer_const_constructors
-      child: PaymentWaitingList(),
-    );
+        create: (context) =>
+            PaymentWaitingBloc(paymentRespository: _paymentRespository),
+        child: const PaymentWaitingList());
   }
 }

@@ -17,25 +17,16 @@ class OrderProcessActionCir extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.only(left: lr, right: lr),
-        color: color,
-        child: Row(
-          children: [
-            Icon(
-              iconData,
-              color: Colors.white,
-            ),
-            const SizedBox(width: 3),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, color: Colors.white),
-            )
-          ],
-        ),
-      ),
-    );
+        onTap: onTap,
+        child: Container(
+            padding: EdgeInsets.only(left: lr, right: lr),
+            color: color,
+            child: Row(children: [
+              Icon(iconData, color: Colors.white),
+              const SizedBox(width: 3),
+              Text(title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 14, color: Colors.white))
+            ])));
   }
 }

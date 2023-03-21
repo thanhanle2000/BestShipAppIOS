@@ -32,12 +32,11 @@ class OrderProcessTextFormFields extends StatelessWidget {
             onFieldSubmitted: onSubmit,
             decoration: InputDecoration(
                 suffixIcon: IconButton(
-                  icon: const Padding(
-                    padding: EdgeInsets.only(left: 10, bottom: 7),
-                    child: Icon(Icons.clear, size: 27),
-                  ),
-                  onPressed: onPressed,
-                ),
+                    icon: const Padding(
+                      padding: EdgeInsets.only(left: 10, bottom: 7),
+                      child: Icon(Icons.clear, size: 27),
+                    ),
+                    onPressed: onPressed),
                 prefixIcon:
                     GestureDetector(onTap: onTap, child: Icon(iconData)),
                 hintText: title,

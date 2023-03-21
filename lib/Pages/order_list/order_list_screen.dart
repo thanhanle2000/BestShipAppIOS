@@ -20,7 +20,6 @@ class OrderListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => OrderListBloc(repository),
-        // ignore: prefer_const_constructors
         child: OrderList(title: title));
   }
 }

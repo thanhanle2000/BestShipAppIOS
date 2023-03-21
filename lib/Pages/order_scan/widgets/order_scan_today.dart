@@ -6,7 +6,6 @@ import 'package:flutter_app_best_shipp/Pages/order_scan/widgets/order_scan_butto
 import 'package:flutter_app_best_shipp/Pages/order_scan/widgets/order_scan_cod_total.dart';
 import 'package:flutter_app_best_shipp/Pages/order_scan/widgets/order_scan_total.dart';
 import 'package:flutter_app_best_shipp/presentation/repositories/order/order_respository.dart';
-import 'package:intl/intl.dart';
 import '../../../Shared/blocs/theme/color.dart';
 import '../../../Shared/constants/constants.dart';
 import '../../../Shared/models/auth/auth_models.dart';
@@ -32,7 +31,6 @@ class OrderScanToday extends StatelessWidget {
   Widget build(BuildContext context) {
     String? name = Prefer.prefs?.getString('authenticationViewModel');
     final username = AuthenticationViewModel.fromJson(jsonDecode(name!));
-    final oCcy = NumberFormat("#,##0", "vi_VN");
     return Column(children: [
       OrderScanButtonFilter(
           title: 'Hôm nay',
@@ -53,64 +51,61 @@ class OrderScanToday extends StatelessWidget {
           title: 'Chờ lấy hàng:',
           total: dataTotalScan.orderTotal ?? 0),
       Container(
-        color: Colors.white,
-        height: 40,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
+          color: Colors.white,
+          height: 40,
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             OrderScanTotal(
                 color: fromHexColor(Constants.COLOR_BUTTON),
                 title: 'Đã quét mã:',
                 total: dataTotalScan.orderTotalPickuped ?? 0),
             Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('COD: ',
-                      style:
-                          TextStyle(fontSize: 16, color: Colours.textDefault)),
-                  Text(oCcy.format(dataTotalScan.totalCODPickuped ?? 0),
-                      style: const TextStyle(
-                          fontSize: 20,
-                          color: Colours.textDefault,
-                          fontWeight: FontWeight.bold)),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
+                padding: const EdgeInsets.only(right: 15),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('COD: ',
+                          style: TextStyle(
+                              fontSize: 16, color: Colours.textDefault)),
+                      Text(format_price(dataTotalScan.totalCODPickuped ?? 0),
+                          style: const TextStyle(
+                              fontSize: 20,
+                              color: Colours.textDefault,
+                              fontWeight: FontWeight.bold))
+                    ]))
+          ])),
       OrderScanCodTotal(
           color: fromHexColor(Constants.COLOR_BUTTON), data: dataTotalScan),
       GestureDetector(
-          onTap: username.userType == 4 ? (){}: () {
-            if (shopId != 0) {
-              if (dataTotalScan.orderTotalRemain != 0) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => OrderListScreen(
-                              title: 'Đơn chưa quét',
-                              totalOrder: dataTotalScan.orderTotalRemain!,
-                              repository: OrderRespository(
-                                  ShopId: shopId, dateNow: date),
-                            )));
-              } else {
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    snackBar_message("Không có dữ liệu.", "warning"),
-                  );
-              }
-            } else {
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  snackBar_message("Vui lòng chọn shop.", "warning"),
-                );
-            }
-          },
+          onTap: username.userType == 4
+              ? () {}
+              : () {
+                  if (shopId != 0) {
+                    if (dataTotalScan.orderTotalRemain != 0) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OrderListScreen(
+                                    title: 'Đơn chưa quét',
+                                    totalOrder: dataTotalScan.orderTotalRemain!,
+                                    repository: OrderRespository(
+                                        ShopId: shopId, dateNow: date),
+                                  )));
+                    } else {
+                      ScaffoldMessenger.of(context)
+                        ..hideCurrentSnackBar()
+                        ..showSnackBar(
+                          snackBar_message("Không có dữ liệu.", "warning"),
+                        );
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                        snackBar_message("Vui lòng chọn shop.", "warning"),
+                      );
+                  }
+                },
           child: OrderScanTotal(
               color: Colours.textDefault,
               title: 'Đơn còn lại:',

@@ -50,72 +50,54 @@ class _OrderProcessEventSatusState extends State<OrderProcessEventSatus> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.grey[200],
-                border: const Border(
-                    top: BorderSide(width: 1, color: Colours.textDefault))),
-            alignment: Alignment.center,
-            width: double.infinity,
-            padding: const EdgeInsets.all(8.0),
-            child: const Text(
-              'Chọn trạng thái lọc',
-              style: TextStyle(fontSize: 18, color: Colours.classicText),
-            ),
+        child: ListView(children: [
+      Container(
+          decoration: BoxDecoration(
+              color: Colors.grey[200],
+              border: const Border(
+                  top: BorderSide(width: 1, color: Colours.textDefault))),
+          alignment: Alignment.center,
+          width: double.infinity,
+          padding: const EdgeInsets.all(8.0),
+          child: const Text('Chọn trạng thái lọc',
+              style: TextStyle(fontSize: 18, color: Colours.classicText))),
+      ListTile(
+          onTap: () => onClicked(allChecked, "checkAll"),
+          leading: Checkbox(
+            value: allChecked.value,
+            onChanged: (value) => onClicked(allChecked, "checkAll"),
           ),
-          ListTile(
-            onTap: () => onClicked(allChecked, "checkAll"),
-            leading: Checkbox(
-              value: allChecked.value,
-              onChanged: (value) => onClicked(allChecked, "checkAll"),
-            ),
-            title: Text(
-              '${allChecked.title}',
-              style: const TextStyle(fontSize: 15, color: Colours.classicText),
-            ),
+          title: Text('${allChecked.title}',
+              style:
+                  const TextStyle(fontSize: 15, color: Colours.classicText))),
+      ...listCheckBox.map((e) => ListTile(
+          onTap: () => onClicked(e, "checkItem"),
+          leading: Checkbox(
+            value: e.value,
+            onChanged: (value) => onClicked(e, "checkItem"),
           ),
-          ...listCheckBox.map((e) => ListTile(
-                onTap: () => onClicked(e, "checkItem"),
-                leading: Checkbox(
-                  value: e.value,
-                  onChanged: (value) => onClicked(e, "checkItem"),
-                ),
-                title: Text(
-                  '${e.title}',
-                  style:
-                      const TextStyle(fontSize: 15, color: Colours.classicText),
-                ),
-              )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              PaymentShipperConfirm(
-                onpress: () async {
-                  await getFilterStatus((numberLst == [0, 8]) ? [0] : numberLst,
-                      widget.blocContext);
-                  widget.titleStatus(alltitle.isEmpty ? lstTitle : alltitle);
-                  // ignore: use_build_context_synchronously
-                  Navigator.pop(context);
-                },
-                title: 'Xác nhận',
-                colorString: Constants.COLOR_BUTTON,
-                lr: 10,
-              ),
-              PaymentShipperConfirm(
-                onpress: () {
-                  Navigator.pop(context);
-                },
-                title: 'Đóng',
-                colorString: Constants.COLOR_APPBAR,
-                lr: 20,
-              )
-            ],
-          )
-        ],
-      ),
-    );
+          title: Text('${e.title}',
+              style:
+                  const TextStyle(fontSize: 15, color: Colours.classicText)))),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        PaymentShipperConfirm(
+            onpress: () async {
+              await getFilterStatus(
+                  (numberLst == [0, 8]) ? [0] : numberLst, widget.blocContext);
+              widget.titleStatus(alltitle.isEmpty ? lstTitle : alltitle);
+              // ignore: use_build_context_synchronously
+              Navigator.pop(context);
+            },
+            title: 'Xác nhận',
+            colorString: Constants.COLOR_BUTTON,
+            lr: 10),
+        PaymentShipperConfirm(
+            onpress: () => Navigator.pop(context),
+            title: 'Đóng',
+            colorString: Constants.COLOR_APPBAR,
+            lr: 20)
+      ])
+    ]));
   }
 
   // lọc theo trạng thái
@@ -169,7 +151,7 @@ class _OrderProcessEventSatusState extends State<OrderProcessEventSatus> {
 
   processCheckFirst() {
     var lstCBCurrent = <ListStatusEvent>[];
-    if (!widget.numberCheck.isEmpty) {
+    if (widget.numberCheck.isNotEmpty) {
       numberLst = widget.numberCheck;
       for (var item in listCheckBox) {
         var it =

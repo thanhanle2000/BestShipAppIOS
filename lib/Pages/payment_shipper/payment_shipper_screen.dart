@@ -8,17 +8,13 @@ class PaymentShipperScreen extends StatelessWidget {
   final PaymentRespository _paymentRespository;
   const PaymentShipperScreen(
       {super.key, required PaymentRespository paymentRespository})
-      // ignore: unnecessary_null_comparison
-      : assert(paymentRespository != null),
-        _paymentRespository = paymentRespository;
+      : _paymentRespository = paymentRespository;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PaymentShipperBloc>(
-      create: (context) =>
-          PaymentShipperBloc(paymentRespository: _paymentRespository),
-      // ignore: prefer_const_constructors
-      child: PaymentShipper(),
-    );
+        create: (context) =>
+            PaymentShipperBloc(paymentRespository: _paymentRespository),
+        child: const PaymentShipper());
   }
 }

@@ -46,10 +46,8 @@ class _PaymentShipperItemState extends State<PaymentShipperItem> {
                           backgroundColor: Colors.green,
                           label: 'Xác nhận',
                           icon: Icons.done,
-                          onPressed: ((context) async {
-                            showdialogconfirm(
-                                widget.paymentBloc, widget.contextBloc);
-                          }))
+                          onPressed: ((context) async => showdialogconfirm(
+                              widget.paymentBloc, widget.contextBloc)))
                     ]),
                 child: PaymentShipperBody(data: widget.data),
               )
@@ -77,17 +75,13 @@ class _PaymentShipperItemState extends State<PaymentShipperItem> {
                       children: [
                         PaymentShipperConfirm(
                             lr: 10,
-                            onpress: () async {
-                              await getConfirmPayment(
-                                  widget.data.id!, contextBloc);
-                            },
+                            onpress: () async => await getConfirmPayment(
+                                widget.data.id!, contextBloc),
                             colorString: Constants.COLOR_BUTTON,
                             title: 'Xác nhận'),
                         PaymentShipperConfirm(
                             lr: 25,
-                            onpress: () {
-                              Navigator.pop(context);
-                            },
+                            onpress: () => Navigator.pop(context),
                             colorString: Constants.COLOR_APPBAR,
                             title: 'Đóng')
                       ])

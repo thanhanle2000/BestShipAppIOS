@@ -74,47 +74,45 @@ class _OrderListMapInfoOrderState extends State<OrderListMapInfoOrder> {
                       ]),
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      OrderListMapButtonStatus(
-                          title: 'Không bắt máy',
-                          onTap: () async {
-                            await showdiaphonenopick(
-                                widget.data, widget.status);
-                          },
-                          hw: 20,
-                          color: fromHexColor(Constants.COLOR_APPBAR)),
-                      OrderListMapButtonStatus(
-                          title: 'Thuê bao',
-                          onTap: () async {
-                            await showdiaphonesub(widget.data, widget.status);
-                          },
-                          hw: 25,
-                          color: fromHexColor(Constants.COLOR_APPBAR)),
-                      OrderListMapButtonStatus(
-                          title: 'Lí do khác',
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      OrderListMapStatusAppointment(
-                                        data: widget.data,
-                                        status: widget.status,
-                                        mapBloc: widget.mapBloc,
-                                        contextBloc: widget.contextMain,
-                                      ))),
-                          hw: 15,
-                          color: fromHexColor(Constants.COLOR_APPBAR))
-                    ],
-                  ),
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        OrderListMapButtonStatus(
+                            title: 'Không bắt máy',
+                            onTap: () async {
+                              await showdiaphonenopick(
+                                  widget.data, widget.status);
+                            },
+                            hw: 20,
+                            color: fromHexColor(Constants.COLOR_APPBAR)),
+                        OrderListMapButtonStatus(
+                            title: 'Thuê bao',
+                            onTap: () async {
+                              await showdiaphonesub(widget.data, widget.status);
+                            },
+                            hw: 25,
+                            color: fromHexColor(Constants.COLOR_APPBAR)),
+                        OrderListMapButtonStatus(
+                            title: 'Lí do khác',
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        OrderListMapStatusAppointment(
+                                          data: widget.data,
+                                          status: widget.status,
+                                          mapBloc: widget.mapBloc,
+                                          contextBloc: widget.contextMain,
+                                        ))),
+                            hw: 15,
+                            color: fromHexColor(Constants.COLOR_APPBAR))
+                      ]),
                   const SizedBox(height: 10),
                   Column(
-                    children:
-                        buildListStatusHisV2(widget.data.ordersStatusHistory),
-                  )
+                      children:
+                          buildListStatusHisV2(widget.data.ordersStatusHistory))
                 ],
               ))
-          : const SizedBox(),
+          : const SizedBox()
     ]);
   }
 

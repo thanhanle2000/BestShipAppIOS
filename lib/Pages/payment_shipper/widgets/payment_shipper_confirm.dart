@@ -16,16 +16,11 @@ class PaymentShipperConfirm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style:
-          ElevatedButton.styleFrom(backgroundColor: fromHexColor(colorString)),
-      onPressed: onpress,
-      child: Padding(
-        padding: EdgeInsets.only(left: lr, right: lr),
-        child: Text(
-          title,
-          style: const TextStyle(fontSize: 15),
-        ),
-      ),
-    );
+        style: ElevatedButton.styleFrom(
+            backgroundColor: fromHexColor(colorString)),
+        onPressed: onpress,
+        child: Padding(
+            padding: EdgeInsets.only(left: lr, right: lr),
+            child: Text(title, style: const TextStyle(fontSize: 15))));
   }
 }

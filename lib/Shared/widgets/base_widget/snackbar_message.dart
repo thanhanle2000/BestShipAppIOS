@@ -21,11 +21,12 @@ SnackBar snackBar_message(String title, String messageType) {
   }
 
   return SnackBar(
+      duration: const Duration(seconds: 2),
       elevation: 6.0,
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
       backgroundColor: color,
-      content: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          // ignore: prefer_const_literals_to_create_immutables
+      content: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [Text(title), icon]));
 }

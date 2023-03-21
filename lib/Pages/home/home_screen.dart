@@ -15,13 +15,8 @@ class HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
-    requestPermission();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    requestPermission();
   }
 
   // cấp full quyền hệ thống cho ứng dụng lần đầu login thành công
@@ -42,8 +37,7 @@ class HomeScreenState extends State<HomeScreen>
         appBar: const PreferredSize(
             preferredSize: Size.fromHeight(45.0),
             child: HomeAppBar(title: 'Trang chủ')),
-        // ignore: prefer_const_constructors
-        drawer: NavDrawer('/'),
+        drawer: const NavDrawer('/'),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

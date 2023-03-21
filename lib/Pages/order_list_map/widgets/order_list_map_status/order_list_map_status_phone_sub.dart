@@ -29,9 +29,8 @@ class OrderListMapStatusPhoneSubscriber extends StatelessWidget {
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         OrderListButtonConfirmFilter(
             onpress: () async {
-              await _onAction_PhoneSubscriber(data.shopId!, data.orderCode!,
+              await onAction_PhoneSubscriber(data.shopId!, data.orderCode!,
                   data.shipper!, status, contextBloc);
-              // ignore: use_build_context_synchronously
               // ignore: use_build_context_synchronously
               Navigator.pop(context);
               // ignore: use_build_context_synchronously
@@ -41,9 +40,7 @@ class OrderListMapStatusPhoneSubscriber extends StatelessWidget {
             color: fromHexColor(Constants.COLOR_BUTTON),
             hw: 10),
         OrderListButtonConfirmFilter(
-            onpress: () {
-              Navigator.pop(context);
-            },
+            onpress: () => Navigator.pop(context),
             title: 'Đóng',
             color: fromHexColor(Constants.COLOR_APPBAR),
             hw: 18)
@@ -52,7 +49,8 @@ class OrderListMapStatusPhoneSubscriber extends StatelessWidget {
   }
 
   // hàm xử lí chuyển trạng thái thuê bao
-  Future<void>? _onAction_PhoneSubscriber(int shopId, String code,
+  // ignore: non_constant_identifier_names, body_might_complete_normally_nullable
+  Future<void>? onAction_PhoneSubscriber(int shopId, String code,
       String shipper, StatusData status, BuildContext context) {
     mapBloc.add(MapBlocEventChangeActionEvent(
         shopId: shopId,

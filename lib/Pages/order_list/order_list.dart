@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../Shared/constants/constants.dart';
 import '../../Shared/utils/app_utils.dart';
 import '../../Shared/widgets/base_widget/endData.dart';
-import '../../Shared/widgets/base_widget/loadingIndicator.dart';
+import '../../Shared/widgets/base_widget/loading_Indicator.dart';
 import '../../Shared/widgets/base_widget/custom_appbar.dart';
 import '../order_widgets_shared/order_item.dart';
 import 'bloc/order_list_bloc.dart';

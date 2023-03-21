@@ -52,74 +52,75 @@ class _OrderProcessActionAppointmentState
             preferredSize: Size.fromHeight(45.0),
             child: OrderListMapStatusAppbar(title: 'Lí do khác')),
         body: Form(
-          key: _formKey,
-          child: Container(
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Column(
-                children: actionItem
-                    .map((e) => RadioListTile<int>(
-                          // ignore: prefer_const_constructors
-                          visualDensity: VisualDensity(
-                              horizontal: VisualDensity.minimumDensity,
-                              vertical: VisualDensity.minimumDensity),
-                          contentPadding: const EdgeInsets.fromLTRB(2, 8, 2, 0),
-                          groupValue: _currentTimeValue,
-                          title: Text(e.action_item_text),
-                          value: e.action_item_id,
-                          onChanged: (val) {
-                            setState(() {
-                              _currentTimeValue = val!;
-                              CancelId = e.action_item_id;
-                            });
-                          },
-                        ))
-                    .toList(),
-              ),
-              CancelId == 100
-                  ? OrderListStatusTextFields(
-                      title: item,
-                      validator: (value) {
-                        return IsNullOrEmpty(value!)
-                            ? 'Vui lòng nhập vào lí do khác'
-                            : null;
-                      },
-                      controller: _controllerAppointment,
-                    )
-                  : const SizedBox(),
-              const SizedBox(height: 10),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                OrderListButtonConfirmFilter(
-                    onpress: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await onActionOrther(
-                            widget.data.shopId!,
-                            widget.data.orderCode!,
-                            widget.data.shipper!,
-                            _controllerAppointment.text,
-                            widget.status,
-                            widget.contextBloc);
-                        // ignore: use_build_context_synchronously
-                        Navigator.pop(context);
-                      }
-                    },
-                    title: 'Xác nhận',
-                    color: fromHexColor(Constants.COLOR_BUTTON),
-                    hw: 25),
-                OrderListButtonConfirmFilter(
-                    onpress: () async {
-                      Navigator.pop(context);
-                    },
-                    title: 'Đóng',
-                    color: fromHexColor(Constants.COLOR_APPBAR),
-                    hw: 20)
-              ])
-            ]),
-          ),
-        ));
+            key: _formKey,
+            child: Container(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: actionItem
+                            .map((e) => RadioListTile<int>(
+                                  // ignore: prefer_const_constructors
+                                  visualDensity: VisualDensity(
+                                      horizontal: VisualDensity.minimumDensity,
+                                      vertical: VisualDensity.minimumDensity),
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(2, 8, 2, 0),
+                                  groupValue: _currentTimeValue,
+                                  title: Text(e.action_item_text),
+                                  value: e.action_item_id,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      _currentTimeValue = val!;
+                                      CancelId = e.action_item_id;
+                                    });
+                                  },
+                                ))
+                            .toList(),
+                      ),
+                      CancelId == 100
+                          ? OrderListStatusTextFields(
+                              title: item,
+                              validator: (value) {
+                                return IsNullOrEmpty(value!)
+                                    ? 'Vui lòng nhập vào lí do khác'
+                                    : null;
+                              },
+                              controller: _controllerAppointment,
+                            )
+                          : const SizedBox(),
+                      const SizedBox(height: 10),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            OrderListButtonConfirmFilter(
+                                onpress: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    await onActionOrther(
+                                        widget.data.shopId!,
+                                        widget.data.orderCode!,
+                                        widget.data.shipper!,
+                                        _controllerAppointment.text,
+                                        widget.status,
+                                        widget.contextBloc);
+                                    // ignore: use_build_context_synchronously
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                title: 'Xác nhận',
+                                color: fromHexColor(Constants.COLOR_BUTTON),
+                                hw: 25),
+                            OrderListButtonConfirmFilter(
+                                onpress: () async => Navigator.pop(context),
+                                title: 'Đóng',
+                                color: fromHexColor(Constants.COLOR_APPBAR),
+                                hw: 20)
+                          ])
+                    ]))));
   }
 
+  // danh sách lý do
   List<ActionItemModel> actionItem = [
     ActionItemModel(action_item_id: 1, action_item_text: 'Khách báo bận'),
     ActionItemModel(
@@ -136,6 +137,7 @@ class _OrderProcessActionAppointmentState
         action_item_text: 'Khách hàng hẹn giao giờ hành chính'),
     ActionItemModel(action_item_id: 100, action_item_text: 'Lí do khác'),
   ];
+  // kiểm tra cấp quyền chuyển cuộc gọi
   void calllog() async {
     Iterable<CallLogEntry> entries = await CallLog.get();
     for (var item in entries) {}

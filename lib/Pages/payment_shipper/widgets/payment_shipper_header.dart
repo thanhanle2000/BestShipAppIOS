@@ -8,27 +8,20 @@ class PaymentShipperHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(5),
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          border: Border(
-              bottom: BorderSide(width: 0.25, color: Colours.textDefault))),
-      child: Row(
-        children: [
-          const Text(
-            'Tổng số phiếu:',
-            style: TextStyle(fontSize: 15, color: Colours.classicText),
-          ),
+        padding: const EdgeInsets.all(5),
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            border: Border(
+                bottom: BorderSide(width: 0.25, color: Colours.textDefault))),
+        child: Row(children: [
+          const Text('Tổng số phiếu:',
+              style: TextStyle(fontSize: 15, color: Colours.classicText)),
           const SizedBox(width: 3),
-          Text(
-            totalPayment.toString(),
-            style: const TextStyle(
-                fontSize: 15,
-                color: Colors.redAccent,
-                fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
+          Text(totalPayment.toString(),
+              style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.redAccent,
+                  fontWeight: FontWeight.bold))
+        ]));
   }
 }

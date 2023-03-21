@@ -64,7 +64,6 @@ class _PaymentShipperState extends State<PaymentShipper> {
           }
         }, child: BlocBuilder<PaymentShipperBloc, PaymentShipperState>(
                 builder: (context, state) {
-          // ignore: unnecessary_null_comparison
           return SizedBox(
               child: Column(children: [
             PaymentShipperHeader(totalPayment: state.total),

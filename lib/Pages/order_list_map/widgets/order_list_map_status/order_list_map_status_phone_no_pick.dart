@@ -28,9 +28,8 @@ class OrderListMapStatusPhoneNoPick extends StatelessWidget {
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         OrderListButtonConfirmFilter(
             onpress: () async {
-              await _onAction_PhoneNoPick(data.shopId!, data.orderCode!,
+              await onAction_PhoneNoPick(data.shopId!, data.orderCode!,
                   data.shipper!, status, contextBloc);
-              // ignore: use_build_context_synchronously
               // ignore: use_build_context_synchronously
               Navigator.pop(context);
               // ignore: use_build_context_synchronously
@@ -40,9 +39,7 @@ class OrderListMapStatusPhoneNoPick extends StatelessWidget {
             color: fromHexColor(Constants.COLOR_BUTTON),
             hw: 10),
         OrderListButtonConfirmFilter(
-            onpress: () {
-              Navigator.pop(context);
-            },
+            onpress: () => Navigator.pop(context),
             title: 'Đóng',
             color: fromHexColor(Constants.COLOR_APPBAR),
             hw: 18)
@@ -51,7 +48,8 @@ class OrderListMapStatusPhoneNoPick extends StatelessWidget {
   }
 
   // hàm xử lí chuyển trạng thái không bắt máy
-  Future<void>? _onAction_PhoneNoPick(int shopId, String code, String shipper,
+  // ignore: non_constant_identifier_names, body_might_complete_normally_nullable
+  Future<void>? onAction_PhoneNoPick(int shopId, String code, String shipper,
       StatusData status, BuildContext context) {
     mapBloc.add(MapBlocEventChangeActionEvent(
         shopId: shopId,

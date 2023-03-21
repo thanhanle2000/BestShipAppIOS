@@ -24,61 +24,51 @@ class OrderProcessSidableRight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Column(
         children: [
-          Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Padding(
+          Expanded(
+              flex: 1,
+              child: Padding(
                   padding: const EdgeInsets.all(3),
                   child: OrderProcessActionCir(
-                    lr: 5,
-                    onTap: () => showdiaphonenopick(data, status),
-                    title: 'Không bắt máy',
-                    color: fromHexColor(Constants.COLOR_APPBAR),
-                    iconData: Icons.phone_missed_outlined,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: OrderProcessActionCir(
-                  lr: 22.5,
-                  onTap: () => showdiaphonesub(data, status),
-                  title: 'Thuê bao',
-                  color: fromHexColor(Constants.COLOR_APPBAR),
-                  iconData: Icons.phone_locked_outlined,
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 3),
-              child: SizedBox(
-                child: OrderProcessActionCir(
-                  lr: 5,
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => OrderProcessActionAppointment(
-                                data: data,
-                                status: status,
-                                orderBloc: orderBloc,
-                                contextBloc: blocContext,
-                              ))),
-                  title: 'Lí do khác',
-                  color: fromHexColor(Constants.COLOR_APPBAR),
-                  iconData: Icons.assignment_late_rounded,
-                ),
-              ),
+                      lr: 5,
+                      onTap: () => showdiaphonenopick(data, status),
+                      title: 'Không bắt máy',
+                      color: fromHexColor(Constants.COLOR_APPBAR),
+                      iconData: Icons.phone_missed_outlined))),
+          Expanded(
+            flex: 1,
+            child: OrderProcessActionCir(
+              lr: 22.5,
+              onTap: () => showdiaphonesub(data, status),
+              title: 'Thuê bao',
+              color: fromHexColor(Constants.COLOR_APPBAR),
+              iconData: Icons.phone_locked_outlined,
             ),
           )
         ],
       ),
-    );
+      SizedBox(
+          child: Padding(
+              padding: const EdgeInsets.only(top: 3),
+              child: SizedBox(
+                  child: OrderProcessActionCir(
+                      lr: 5,
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  OrderProcessActionAppointment(
+                                    data: data,
+                                    status: status,
+                                    orderBloc: orderBloc,
+                                    contextBloc: blocContext,
+                                  ))),
+                      title: 'Lí do khác',
+                      color: fromHexColor(Constants.COLOR_APPBAR),
+                      iconData: Icons.assignment_late_rounded))))
+    ]));
   }
 
   // chuyển đổi trạng thái đơn không bắt máy

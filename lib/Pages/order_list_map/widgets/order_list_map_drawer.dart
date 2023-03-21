@@ -31,51 +31,43 @@ class _OrderListMapDrawerState extends State<OrderListMapDrawer> {
         child: BlocBuilder<MapBloc, MapBlocState>(builder: (context, state) {
       return Drawer(
           backgroundColor: Colors.grey[200],
-          child: state.orderList != null
-              ? Column(children: <Widget>[
+          child: state.orderList == null
+              ? const SizedBox()
+              : Column(children: <Widget>[
                   Container(
                       width: double.infinity,
                       color: Colors.white,
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(10),
-                      child: Row(
-                        children: [
-                          const Text(
-                            'Đơn đang giao: ',
-                            // ignore: prefer_const_constructors
+                      child: Row(children: [
+                        const Text('Đơn đang giao: ',
                             style: TextStyle(
-                                fontSize: 18, color: Colours.textDefault),
-                          ),
-                          Text(
-                            '${state.orderList?.length}',
-                            // ignore: prefer_const_constructors
+                                fontSize: 18, color: Colours.textDefault)),
+                        Text('${state.orderList?.length}',
                             style: const TextStyle(
                                 fontSize: 18,
                                 color: Colours.textDefault,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      )),
+                                fontWeight: FontWeight.bold))
+                      ])),
                   Expanded(
                       child: ListView(
-                          children: _buildListItem(state.orderList!,
+                          children: buildListItem(state.orderList!,
                               state.statusModels!, widget.context)))
-                ])
-              : const SizedBox());
+                ]));
     }));
   }
 
-  List<Widget> _buildListItem(List<OrderModels> lstdata,
-      StatusData statusModels, BuildContext contextMain) {
-    List<Widget> _lstWidget = [];
+  List<Widget> buildListItem(List<OrderModels> lstdata, StatusData statusModels,
+      BuildContext contextMain) {
+    List<Widget> lstWidget = [];
     lstdata.map((item) {
-      _lstWidget.add(MapConvertItem(
+      lstWidget.add(MapConvertItem(
         data: item,
         statusModels: statusModels,
         contextMain: contextMain,
         mapBloc: widget.mapBloc,
       ));
     }).toList();
-    return _lstWidget;
+    return lstWidget;
   }
 }
