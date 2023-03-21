@@ -11,6 +11,10 @@ class ApiConstants {
   // api product v2
   // ignore: constant_identifier_names
   static const BASE_URL_PRODUCT = 'https://portal.bestship.com.vn';
+
+  // api google_map
+  // ignore: constant_identifier_names
+  static const BASE_GOOGLE_MAP = 'https://www.google.com/maps/dir/?api=1';
 }
 
 // cấu hình cho header => get token

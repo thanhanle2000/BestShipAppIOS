@@ -6,10 +6,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io' show Platform;
 
+import '../../../Shared/constants/api_constants.dart';
+
 class OrderListModalBottomSheet extends StatefulWidget {
   final String? title;
-  final Widget? UI;
-  final bool? HasTitle;
+  final Widget? ui;
+  final bool? hasTitle;
   final double? height;
   final double? lonData;
   final double? latData;
@@ -17,8 +19,8 @@ class OrderListModalBottomSheet extends StatefulWidget {
   const OrderListModalBottomSheet(
       {super.key,
       this.title,
-      this.UI,
-      this.HasTitle,
+      this.ui,
+      this.hasTitle,
       this.height,
       this.lonData,
       this.latData});
@@ -43,7 +45,7 @@ class _OrderListModalBottomSheetState extends State<OrderListModalBottomSheet> {
 
     await launchUrl(
         Uri.parse(
-            "https://www.google.com/maps/dir/?api=1&origin=$lats,$lons&destination=${widget.latData},${widget.lonData}"),
+            "${ApiConstants.BASE_GOOGLE_MAP}&origin=$lats,$lons&destination=${widget.latData},${widget.lonData}"),
         mode: LaunchMode.externalApplication);
   }
 
@@ -72,7 +74,7 @@ class _OrderListModalBottomSheetState extends State<OrderListModalBottomSheet> {
                   topRight: Radius.circular(8.0))),
           child: Center(
               child: Column(children: [
-            widget.HasTitle!
+            widget.hasTitle!
                 ? Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.only(top: 10),
@@ -80,7 +82,7 @@ class _OrderListModalBottomSheetState extends State<OrderListModalBottomSheet> {
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold)))
                 : const SizedBox(),
-            widget.UI!
+            widget.ui!
           ])))
     ]);
   }

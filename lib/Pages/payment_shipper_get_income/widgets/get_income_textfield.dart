@@ -32,12 +32,14 @@ class GetIncomeTextField extends StatefulWidget {
 
 class _GetIncomeTextFieldState extends State<GetIncomeTextField> {
   final TextEditingController _userController = TextEditingController();
-  String nameUser = 'Vui lòng chọn';
-
   String? name = Prefer.prefs?.getString('authenticationViewModel');
+  late final username = AuthenticationViewModel.fromJson(jsonDecode(name!));
+  String nameUser = '';
+
   @override
   void initState() {
     super.initState();
+    nameUser = username.userName!;
     getListUser(' ');
   }
 
@@ -49,7 +51,6 @@ class _GetIncomeTextFieldState extends State<GetIncomeTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final username = AuthenticationViewModel.fromJson(jsonDecode(name!));
     var size = MediaQuery.of(context).size;
     /*24 is for notification bar on Android*/
     final double itemHeight = (size.height - kToolbarHeight - 35) / 2.8;
@@ -97,8 +98,8 @@ class _GetIncomeTextFieldState extends State<GetIncomeTextField> {
                               builder: (context) => ModalBottomSheet(
                                   title: '',
                                   height: (itemWidth / itemHeight),
-                                  HasTitle: false,
-                                  UI: Expanded(
+                                  hasTitle: false,
+                                  ui: Expanded(
                                       child: Column(children: [
                                     GetIncomeUser(
                                         controller: _userController,

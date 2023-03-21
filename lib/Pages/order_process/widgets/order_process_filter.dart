@@ -86,8 +86,8 @@ class _OrderProcessFilterState extends State<OrderProcessFilter> {
                   builder: (context) => ModalBottomSheet(
                       title: '',
                       height: (itemWidth / itemHeight),
-                      HasTitle: false,
-                      UI: Expanded(
+                      hasTitle: false,
+                      ui: Expanded(
                           child: Column(children: [
                         OrderListTextFieldShop(
                             controller: _shopController,
@@ -143,8 +143,8 @@ class _OrderProcessFilterState extends State<OrderProcessFilter> {
                   builder: (context) => ModalBottomSheet(
                       title: '',
                       height: (itemWidthDate / itemHeightDate),
-                      HasTitle: false,
-                      UI: OrderProcessDateRange(
+                      hasTitle: false,
+                      ui: OrderProcessDateRange(
                         date: getDate,
                         orderBloc: widget.orderBloc,
                         blocContext: widget.blocContext,
@@ -172,8 +172,8 @@ class _OrderProcessFilterState extends State<OrderProcessFilter> {
                   builder: (context) => ModalBottomSheet(
                       title: '',
                       height: (itemWidth / itemHeight),
-                      HasTitle: false,
-                      UI: OrderProcessEventSatus(
+                      hasTitle: false,
+                      ui: OrderProcessEventSatus(
                         numberCheck: widget.number,
                         orderBloc: widget.orderBloc,
                         blocContext: widget.blocContext,

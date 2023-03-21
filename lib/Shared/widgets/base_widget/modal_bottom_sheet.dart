@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class ModalBottomSheet extends StatelessWidget {
   final String title;
-  final Widget UI;
-  final bool HasTitle;
+  final Widget ui;
+  final bool hasTitle;
   final double height;
   const ModalBottomSheet(
       {super.key,
       required this.title,
-      required this.UI,
-      required this.HasTitle,
+      required this.ui,
+      required this.hasTitle,
       required this.height});
 
   @override
@@ -24,7 +24,7 @@ class ModalBottomSheet extends StatelessWidget {
             )),
         child: Center(
             child: Column(children: [
-          HasTitle
+          hasTitle
               ? Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.only(top: 10),
@@ -32,7 +32,7 @@ class ModalBottomSheet extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold)))
               : const SizedBox(),
-          UI
+          ui
         ])));
   }
 }

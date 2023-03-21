@@ -114,8 +114,8 @@ class _OrderScanTextFieldState extends State<OrderScanTextField> {
                   builder: (context) => ModalBottomSheet(
                       title: '',
                       height: (itemWidth / itemHeight),
-                      HasTitle: false,
-                      UI: Expanded(
+                      hasTitle: false,
+                      ui: Expanded(
                           child: Column(children: [
                         OrderListTextFieldShop(
                             controller: _shopController,
@@ -185,8 +185,8 @@ class _OrderScanTextFieldState extends State<OrderScanTextField> {
                       builder: (context) => ModalBottomSheet(
                           title: '',
                           height: (itemWidth / itemHeight),
-                          HasTitle: false,
-                          UI: Expanded(
+                          hasTitle: false,
+                          ui: Expanded(
                               child: Column(children: [
                             OrderListTextFieldShop(
                                 controller: _userController,

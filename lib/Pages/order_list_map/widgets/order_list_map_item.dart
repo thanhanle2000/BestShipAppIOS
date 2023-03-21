@@ -35,8 +35,8 @@ class MapConvertItem extends StatelessWidget {
             backgroundColor: Colors.transparent,
             builder: (context) => Wrap(children: [
                   OrderListModalBottomSheet(
-                      HasTitle: false,
-                      UI: OrderListMapInfoOrder(
+                      hasTitle: false,
+                      ui: OrderListMapInfoOrder(
                         data: data,
                         status: statusModels,
                         mapBloc: mapBloc,

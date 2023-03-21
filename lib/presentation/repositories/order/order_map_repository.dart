@@ -47,10 +47,10 @@ class MapRepository {
                   backgroundColor: Colors.transparent,
                   builder: (context) => Wrap(children: [
                         OrderListModalBottomSheet(
-                            HasTitle: false,
+                            hasTitle: false,
                             lonData: data.lng,
-                            latData:data.lat,
-                            UI: OrderListMapInfoOrder(
+                            latData: data.lat,
+                            ui: OrderListMapInfoOrder(
                               data: data,
                               status: statusModels,
                               mapBloc: mapBloc,
