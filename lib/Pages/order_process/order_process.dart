@@ -111,7 +111,7 @@ class _OrderProcessState extends State<OrderProcess> {
                                                   .baseStatus?.status ==
                                               4
                                           ? ActionPane(
-                                              extentRatio: 0.31,
+                                              extentRatio: 0.375,
                                               motion: const ScrollMotion(),
                                               children: [
                                                   OrderProcessSidableLeft(
@@ -129,16 +129,17 @@ class _OrderProcessState extends State<OrderProcess> {
                                                   .baseStatus?.status ==
                                               4
                                           ? ActionPane(
-                                              extentRatio: 0.62,
+                                              extentRatio: 0.76,
                                               motion: const ScrollMotion(),
                                               children: [
                                                   OrderProcessSidableRight(
-                                                      status:
-                                                          state.actionStatus!,
-                                                      data:
-                                                          state.lstData[index],
-                                                      orderBloc: orderBloc,
-                                                      blocContext: context)
+                                                    status: state.actionStatus!,
+                                                    data: state.lstData[index],
+                                                    orderBloc: orderBloc,
+                                                    blocContext: context,
+                                                    userType:
+                                                        username.userType!,
+                                                  )
                                                 ])
                                           : const ActionPane(
                                               motion: ScrollMotion(),

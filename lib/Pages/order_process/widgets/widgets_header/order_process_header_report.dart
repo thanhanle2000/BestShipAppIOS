@@ -1,8 +1,10 @@
 import 'dart:async';
+
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_best_shipp/Pages/order_process/bloc/order_process_event.dart';
 import 'package:intl/intl.dart';
+
 import '../../../../Shared/blocs/theme/color.dart';
 import '../../../../Shared/widgets/base_widget/snackbar_message.dart';
 import '../../bloc/order_process_bloc.dart';
@@ -59,6 +61,10 @@ class _OrderProcessHeaderReportState extends State<OrderProcessHeaderReport> {
         processBloc: widget.orderBloc));
   }
 
+  // thông số
+  final text_title = 15.0;
+  final text_number = 18.0;
+
   @override
   Widget build(BuildContext context) {
     final oCcy = NumberFormat("#,##0", "vi_VN");
@@ -85,10 +91,10 @@ class _OrderProcessHeaderReportState extends State<OrderProcessHeaderReport> {
           },
         ),
         Container(
-            height: 54,
+            height: 56,
             color: Colors.grey[50],
             width: double.infinity,
-            padding: const EdgeInsets.all(5),
+            padding: const EdgeInsets.all(4),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -99,24 +105,24 @@ class _OrderProcessHeaderReportState extends State<OrderProcessHeaderReport> {
                       children: [
                         Text('Tổng : ',
                             style: TextStyle(
-                                fontSize: 15, color: Colors.grey[600])),
+                                fontSize: text_title, color: Colors.grey[600])),
                         const SizedBox(height: 5),
                         Text('Thành công : ',
                             style: TextStyle(
-                                fontSize: 15, color: Colors.grey[600])),
+                                fontSize: text_title, color: Colors.grey[600])),
                       ],
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(oCcy.format(widget.total),
-                            style: const TextStyle(
-                                fontSize: 18,
+                            style: TextStyle(
+                                fontSize: text_number,
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold)),
                         Text(oCcy.format(widget.totalSuc),
-                            style: const TextStyle(
-                                fontSize: 18,
+                            style: TextStyle(
+                                fontSize: text_number,
                                 color: Colors.green,
                                 fontWeight: FontWeight.bold)),
                       ],
@@ -130,24 +136,26 @@ class _OrderProcessHeaderReportState extends State<OrderProcessHeaderReport> {
                         children: [
                           Text('Đang giao : ',
                               style: TextStyle(
-                                  fontSize: 15, color: Colors.grey[600])),
+                                  fontSize: text_title,
+                                  color: Colors.grey[600])),
                           const SizedBox(height: 5),
                           Text('Khác : ',
                               style: TextStyle(
-                                  fontSize: 15, color: Colors.grey[600])),
+                                  fontSize: text_title,
+                                  color: Colors.grey[600])),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(oCcy.format(widget.totalPro),
-                              style: const TextStyle(
-                                  fontSize: 18,
+                              style: TextStyle(
+                                  fontSize: text_number,
                                   color: Colors.purple,
                                   fontWeight: FontWeight.bold)),
                           Text(oCcy.format(widget.totalOth),
-                              style: const TextStyle(
-                                  fontSize: 18,
+                              style: TextStyle(
+                                  fontSize: text_number,
                                   color: Colors.orangeAccent,
                                   fontWeight: FontWeight.bold)),
                         ],
@@ -179,8 +187,11 @@ class _OrderProcessHeaderReportState extends State<OrderProcessHeaderReport> {
                                   isActive
                                       ? Icons.arrow_upward_outlined
                                       : Icons.arrow_downward_outlined,
-                                  size: 16)),
-                          Text(isActive ? 'Tăng dần' : 'Giảm dần')
+                                  size: 13)),
+                          Text(
+                            isActive ? 'Tăng dần' : 'Giảm dần',
+                            style: const TextStyle(fontSize: 13),
+                          )
                         ],
                       ))
                 ])),

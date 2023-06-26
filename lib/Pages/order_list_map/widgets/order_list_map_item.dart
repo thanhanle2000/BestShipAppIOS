@@ -1,3 +1,4 @@
+import 'package:call_log/call_log.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -8,10 +9,11 @@ import '../../../Shared/constants/constants.dart';
 import '../../../Shared/models/order_list/order_list_models.dart';
 import '../../../Shared/models/status/status_models.dart';
 import '../../../Shared/utils/app_utils.dart';
+import '../../../Shared/utils/get_call_log.dart';
 import 'order_list_map_modalbottomsheet.dart';
 import 'order_list_map_order_bottom_sheet.dart';
 
-class MapConvertItem extends StatelessWidget {
+class MapConvertItem extends StatefulWidget {
   final OrderModels data;
   final StatusData statusModels;
   final BuildContext contextMain;
@@ -24,21 +26,84 @@ class MapConvertItem extends StatelessWidget {
       required this.mapBloc});
 
   @override
+  State<MapConvertItem> createState() => MapConvertItemState();
+}
+
+typedef OnCallLogChangedCallback = void Function();
+
+class MapConvertItemState extends State<MapConvertItem>
+    with WidgetsBindingObserver {
+  Iterable<CallLogEntry> _callLogEntries = <CallLogEntry>[];
+  CallLogEntry? _currentCallLogEntry;
+  OnCallLogChangedCallback? _onCallLogChangedCallback;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      updateCallLogEntries();
+    }
+  }
+
+  void setOnCallLogChangedCallback(OnCallLogChangedCallback callback) {
+    _onCallLogChangedCallback = callback;
+  }
+
+  Future<void> updateCallLogEntries() async {
+    final Iterable<CallLogEntry> previousCallLogEntries = await CallLog.query();
+    setState(() {
+      _callLogEntries = previousCallLogEntries;
+    });
+
+    final Iterable<CallLogEntry> updatedCallLogEntries = await CallLog.query();
+    setState(() {
+      _callLogEntries = updatedCallLogEntries;
+    });
+
+    if (_callLogEntries.isNotEmpty) {
+      final CallLogEntry latestCallLogEntry = _callLogEntries.first;
+      if (latestCallLogEntry.duration != null) {
+        setState(() {
+          _currentCallLogEntry = latestCallLogEntry;
+        });
+        saveCallLog(widget.data.id!, latestCallLogEntry.duration!);
+        print('Latest Duration: ${latestCallLogEntry.duration} seconds');
+        _onCallLogChangedCallback?.call();
+      }
+    }
+  }
+
+  Future<void> makeCall() async {
+    launch('tel://${widget.data.customerPhone}');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
         await showModalBottomSheet(
-            context: contextMain,
+            context: widget.contextMain,
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
             builder: (context) => Wrap(children: [
                   OrderListModalBottomSheet(
                       hasTitle: false,
                       ui: OrderListMapInfoOrder(
-                        data: data,
-                        status: statusModels,
-                        mapBloc: mapBloc,
-                        contextMain: contextMain,
+                        data: widget.data,
+                        status: widget.statusModels,
+                        mapBloc: widget.mapBloc,
+                        contextMain: widget.contextMain,
                       ))
                 ]));
         // ignore: use_build_context_synchronously
@@ -54,10 +119,9 @@ class MapConvertItem extends StatelessWidget {
               Row(children: [
                 GestureDetector(
                     onTap: () async {
-                      // ignore: deprecated_member_use
-                      launch('tel://${data.customerPhone}'); // phương thức gọi
+                      await makeCall();
                     },
-                    child: Text(data.customerPhone!,
+                    child: Text(widget.data.customerPhone!,
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -65,15 +129,15 @@ class MapConvertItem extends StatelessWidget {
                 const SizedBox(width: 5),
                 GestureDetector(
                     onTap: () {
-                      FlutterClipboard.copy(data.customerPhone!);
+                      FlutterClipboard.copy(widget.data.customerPhone!);
                       Navigator.pop(context);
                       showNotiCopy(
-                          'Bạn vừa copy số điện thoại : ${data.customerPhone}',
+                          'Bạn vừa copy số điện thoại : ${widget.data.customerPhone}',
                           context);
                     },
                     child: const Icon(Icons.content_copy_outlined, size: 15))
               ]),
-              Text(data.customerName!,
+              Text(widget.data.customerName!,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -84,7 +148,7 @@ class MapConvertItem extends StatelessWidget {
                 Icon(Icons.monetization_on,
                     color: fromHexColor(Constants.COLOR_BUTTON), size: 15),
                 const SizedBox(width: 4),
-                Text(format_price(data.codPrice),
+                Text(format_price(widget.data.codPrice),
                     style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -96,7 +160,7 @@ class MapConvertItem extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                     DateFormat("dd-MM-yyyy")
-                        .format(DateTime.parse(data.orderDate!)),
+                        .format(DateTime.parse(widget.data.orderDate!)),
                     style: const TextStyle(
                         fontSize: 15, color: Colours.textDefault))
               ])
@@ -110,7 +174,7 @@ class MapConvertItem extends StatelessWidget {
                     const SizedBox(width: 4),
                     Expanded(
                         child: Wrap(children: [
-                      Text(data.customerAddress!,
+                      Text(widget.data.customerAddress!,
                           style: const TextStyle(
                               fontSize: 17, color: Colours.textDefault))
                     ]))
@@ -121,7 +185,7 @@ class MapConvertItem extends StatelessWidget {
                     const SizedBox(width: 5),
                     Expanded(
                         child: Wrap(children: [
-                      Text(data.shopOrderProduct!,
+                      Text(widget.data.shopOrderProduct!,
                           style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -129,7 +193,7 @@ class MapConvertItem extends StatelessWidget {
                     ]))
                   ]),
                   const SizedBox(height: 5),
-                  (!IsNullOrEmpty(data.shopNote!))
+                  (!IsNullOrEmpty(widget.data.shopNote!))
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -139,7 +203,7 @@ class MapConvertItem extends StatelessWidget {
                               const SizedBox(width: 5),
                               Expanded(
                                   child: Wrap(children: [
-                                Text(data.shopNote!,
+                                Text(widget.data.shopNote!,
                                     style: const TextStyle(
                                         color: Colours.textDefault,
                                         fontSize: 15,
@@ -149,7 +213,7 @@ class MapConvertItem extends StatelessWidget {
                             ])
                       : const SizedBox(),
                   const SizedBox(height: 5),
-                  (!IsNullOrEmpty(data.orderStatusNote!))
+                  (!IsNullOrEmpty(widget.data.orderStatusNote!))
                       ? Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -159,7 +223,7 @@ class MapConvertItem extends StatelessWidget {
                               const SizedBox(width: 5),
                               Expanded(
                                   child: Wrap(children: [
-                                Text(data.orderStatusNote!,
+                                Text(widget.data.orderStatusNote!,
                                     style: const TextStyle(
                                         color: Colours.textDefault,
                                         fontSize: 15,
@@ -172,15 +236,15 @@ class MapConvertItem extends StatelessWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        !IsNullOrEmpty(data.shopPhone!)
+                        !IsNullOrEmpty(widget.data.shopPhone!)
                             ? Row(children: [
                                 GestureDetector(
                                     onTap: () async {
                                       // ignore: deprecated_member_use
                                       launch(
-                                          'tel://${data.shopPhone}'); // phương thức gọi
+                                          'tel://${widget.data.shopPhone}'); // phương thức gọi
                                     },
-                                    child: Text(data.shopPhone!,
+                                    child: Text(widget.data.shopPhone!,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
@@ -189,10 +253,11 @@ class MapConvertItem extends StatelessWidget {
                                 const SizedBox(width: 5),
                                 GestureDetector(
                                     onTap: () {
-                                      FlutterClipboard.copy(data.shopPhone!);
+                                      FlutterClipboard.copy(
+                                          widget.data.shopPhone!);
                                       Navigator.pop(context);
                                       showNotiCopy(
-                                          'Bạn vừa copy số điện thoại : ${data.shopPhone}',
+                                          'Bạn vừa copy số điện thoại : ${widget.data.shopPhone}',
                                           context);
                                     },
                                     child: const Icon(
@@ -200,7 +265,7 @@ class MapConvertItem extends StatelessWidget {
                                         size: 15))
                               ])
                             : const SizedBox(),
-                        Text(data.shopName!,
+                        Text(widget.data.shopName!,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,

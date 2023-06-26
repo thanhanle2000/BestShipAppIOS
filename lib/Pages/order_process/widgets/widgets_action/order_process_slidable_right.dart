@@ -14,12 +14,14 @@ class OrderProcessSidableRight extends StatelessWidget {
   final BuildContext blocContext;
   final OrderModels data;
   final StatusData status;
+  final int userType;
   const OrderProcessSidableRight(
       {super.key,
       required this.orderBloc,
       required this.blocContext,
       required this.data,
-      required this.status});
+      required this.status,
+      required this.userType});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class OrderProcessSidableRight extends StatelessWidget {
           Expanded(
             flex: 1,
             child: OrderProcessActionCir(
-              lr: 22.5,
+              lr: 28,
               onTap: () => showdiaphonesub(data, status),
               title: 'Thuê bao',
               color: fromHexColor(Constants.COLOR_APPBAR),
@@ -64,6 +66,7 @@ class OrderProcessSidableRight extends StatelessWidget {
                                     status: status,
                                     orderBloc: orderBloc,
                                     contextBloc: blocContext,
+                                    userType: userType,
                                   ))),
                       title: 'Lí do khác',
                       color: fromHexColor(Constants.COLOR_APPBAR),

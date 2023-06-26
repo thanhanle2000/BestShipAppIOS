@@ -1,13 +1,18 @@
+import 'dart:convert';
 import 'package:call_log/call_log.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../bloc/map_bloc.dart';
 import '../../../../Shared/constants/constants.dart';
+import '../../../../Shared/models/auth/auth_models.dart';
 import '../../../../Shared/models/auth/tag_key/tagkeyword.dart';
 import '../../../../Shared/models/order_list/order_list_models.dart';
 import '../../../../Shared/models/status/status_models.dart';
+import '../../../../Shared/preferences/preferences.dart';
 import '../../../../Shared/utils/app_utils.dart';
+import '../../../../Shared/utils/get_call_log.dart';
+import '../../bloc/map_bloc.dart';
 import '../order_list_button_confirm_filter.dart';
+import '../order_list_map_item.dart';
 import 'order_list_map_status_appbar.dart';
 import 'order_list_map_status_textfield.dart';
 
@@ -34,12 +39,35 @@ class _OrderListMapStatusAppointmentState
   String item = 'Mời nhập vào lí do';
   int _currentTimeValue = 1;
   int CancelId = 1;
+  int action_call_time = 0;
+
   TextEditingController _controllerAppointment = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String? name = Prefer.prefs?.getString('authenticationViewModel');
+  late final username = AuthenticationViewModel.fromJson(jsonDecode(name!));
+
   @override
   void initState() {
     super.initState();
+    loadCallLogs();
     calllog();
+
+    // Đăng ký callback để cập nhật dữ liệu khi có sự thay đổi trong cuộc gọi
+    final MapConvertItemState? orderItemCustomerState =
+        context.findAncestorStateOfType<MapConvertItemState>();
+    orderItemCustomerState?.setOnCallLogChangedCallback(() {
+      // Cập nhật dữ liệu cuộc gọi khi có sự thay đổi
+      loadCallLogs();
+    });
+  }
+
+  void loadCallLogs() async {
+    if (widget.data != null) {
+      action_call_time = await getCallLogs(widget.data.id!);
+      print("#####################");
+      print(action_call_time);
+      calllog();
+    }
   }
 
   @override
@@ -57,12 +85,12 @@ class _OrderListMapStatusAppointmentState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Column(
-                          children: actionItem
-                              .map((e) => RadioListTile<int>(
-                                  // ignore: prefer_const_constructors
-                                  visualDensity: VisualDensity(
-                                      horizontal: VisualDensity.minimumDensity,
-                                      vertical: VisualDensity.minimumDensity),
+                        children: actionItem
+                            .map((e) => RadioListTile<int>(
+                                  visualDensity: const VisualDensity(
+                                    horizontal: VisualDensity.minimumDensity,
+                                    vertical: VisualDensity.minimumDensity,
+                                  ),
                                   contentPadding:
                                       const EdgeInsets.fromLTRB(2, 8, 2, 0),
                                   groupValue: _currentTimeValue,
@@ -73,8 +101,10 @@ class _OrderListMapStatusAppointmentState
                                       _currentTimeValue = val!;
                                       CancelId = e.action_item_id;
                                     });
-                                  }))
-                              .toList()),
+                                  },
+                                ))
+                            .toList(),
+                      ),
                       CancelId == 100
                           ? OrderListStatusTextFields(
                               title: item,
@@ -120,19 +150,14 @@ class _OrderListMapStatusAppointmentState
 
   // danh sách trạng thái
   List<ActionItemModel> actionItem = [
-    ActionItemModel(action_item_id: 1, action_item_text: 'Khách báo bận'),
     ActionItemModel(
-        action_item_id: 2, action_item_text: 'Khách hẹn lại ngày khác'),
+        action_item_id: 2,
+        action_item_text: 'Khách hẹn lại thời gian nhận hàng'),
     ActionItemModel(
         action_item_id: 3,
         action_item_text: 'Khách hàng đi vắng, không có ở nhà'),
-    ActionItemModel(
-        action_item_id: 4, action_item_text: 'Khách hàng hẹn buổi sáng'),
-    ActionItemModel(
-        action_item_id: 5, action_item_text: 'Khách hàng hẹn buổi chiều'),
-    ActionItemModel(
-        action_item_id: 6,
-        action_item_text: 'Khách hàng hẹn giao giờ hành chính'),
+    ActionItemModel(action_item_id: 4, action_item_text: 'SĐT không đúng'),
+    ActionItemModel(action_item_id: 5, action_item_text: 'Địa chỉ không đúng'),
     ActionItemModel(action_item_id: 100, action_item_text: 'Lí do khác'),
   ];
 
@@ -159,21 +184,12 @@ class _OrderListMapStatusAppointmentState
         shopId: shopId,
         code: code,
         action_item_id: CancelId,
-        action_call_time: 0,
+        action_call_time: action_call_time,
         shipper: shipper,
         action_id: 3,
         action_text: action_text,
         statusModels: status,
         context: context,
         mapBloc: widget.mapBloc));
-  }
-
-  void showNoti(String text, BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        padding: const EdgeInsets.only(left: 5, top: 10, bottom: 10),
-        elevation: 0,
-        backgroundColor: Colors.orange,
-        duration: const Duration(seconds: 5),
-        content: Text(text, style: const TextStyle(fontSize: 16))));
   }
 }

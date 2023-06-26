@@ -55,7 +55,7 @@ class _OrderListMapInfoOrderState extends State<OrderListMapInfoOrder> {
                             onTap: () async {
                               await showdiasuccess(widget.data, widget.status);
                             },
-                            hw: 50,
+                            hw: 35,
                             color: fromHexColor(Constants.COLOR_BUTTON)),
                         OrderListMapButtonStatus(
                             title: 'Báo hủy đơn',
@@ -69,7 +69,7 @@ class _OrderListMapInfoOrderState extends State<OrderListMapInfoOrder> {
                                           mapBloc: widget.mapBloc,
                                           contextBloc: widget.contextMain,
                                         ))),
-                            hw: 50,
+                            hw: 35,
                             color: Colors.red.shade700)
                       ]),
                   const SizedBox(height: 10),
@@ -82,14 +82,14 @@ class _OrderListMapInfoOrderState extends State<OrderListMapInfoOrder> {
                               await showdiaphonenopick(
                                   widget.data, widget.status);
                             },
-                            hw: 20,
+                            hw: 5,
                             color: fromHexColor(Constants.COLOR_APPBAR)),
                         OrderListMapButtonStatus(
                             title: 'Thuê bao',
                             onTap: () async {
                               await showdiaphonesub(widget.data, widget.status);
                             },
-                            hw: 25,
+                            hw: 15,
                             color: fromHexColor(Constants.COLOR_APPBAR)),
                         OrderListMapButtonStatus(
                             title: 'Lí do khác',
@@ -103,7 +103,7 @@ class _OrderListMapInfoOrderState extends State<OrderListMapInfoOrder> {
                                           mapBloc: widget.mapBloc,
                                           contextBloc: widget.contextMain,
                                         ))),
-                            hw: 15,
+                            hw: 10,
                             color: fromHexColor(Constants.COLOR_APPBAR))
                       ]),
                   const SizedBox(height: 10),
