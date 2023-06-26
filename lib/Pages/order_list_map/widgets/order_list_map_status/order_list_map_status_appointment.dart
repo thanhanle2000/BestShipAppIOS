@@ -153,9 +153,6 @@ class _OrderListMapStatusAppointmentState
     ActionItemModel(
         action_item_id: 2,
         action_item_text: 'Khách hẹn lại thời gian nhận hàng'),
-    ActionItemModel(
-        action_item_id: 3,
-        action_item_text: 'Khách hàng đi vắng, không có ở nhà'),
     ActionItemModel(action_item_id: 4, action_item_text: 'SĐT không đúng'),
     ActionItemModel(action_item_id: 5, action_item_text: 'Địa chỉ không đúng'),
     ActionItemModel(action_item_id: 100, action_item_text: 'Lí do khác'),
